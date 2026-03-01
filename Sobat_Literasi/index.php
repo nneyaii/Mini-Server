@@ -20,7 +20,7 @@ $causes = [
     ],
     [
         'title'    => 'Kelas 12 - Persipaan Ujian',
-        'desc'     => 'Materi lengkap untuk persiapan kelulusan dan ujian akhir dengan pembahasan terstruktur.',
+        'desc'     => 'Materi pembelajaran lengkap untuk persiapan kelulusan dan ujian akhir dengan pembahasan terstruktur.',
         'img'      => 'images/causes/3.png',
 
     ],
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['volunteer-name'])) {
 
     if (empty($volunteerData['name']))    $volunteerErrors['name']    = 'Nama wajib diisi.';
     if (empty($volunteerData['email']) || !filter_var($_POST['volunteer-email'], FILTER_VALIDATE_EMAIL))
-                                          $volunteerErrors['email']   = 'Email tidak valid.';
+                                    $volunteerErrors['email']   = 'Email tidak valid.';
     if (empty($volunteerData['subject'])) $volunteerErrors['subject'] = 'Subject wajib diisi.';
 
     if (empty($volunteerErrors)) {

@@ -1,6 +1,6 @@
 <?php
 $pageTitle  = 'Sobat Literasi';
-$activePage = 'donate';
+$activePage = 'gabung';
 
 // Handle form donasi
 $donateSuccess = false;
