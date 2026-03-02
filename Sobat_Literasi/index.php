@@ -434,8 +434,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     <?php endif; ?>
 
                     <form class="custom-form contact-form" action="index.php#section_6" method="post" role="form">
-                        <h2>Contact form</h2>
-                        <p class="mb-4">Or, you can just send an email: <a href="mailto:info@charity.org">info@charity.org</a></p>
+                        <h2>Formulir Kontak</h2>
+                        <p class="mb-4">Atau, Anda dapat mengirim email ke: <a href="mailto:info@solit.org">info@solit.org</a></p>
 
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
@@ -468,12 +468,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
 
                         <textarea name="message" rows="5"
                             class="form-control <?php echo isset($contactErrors['message']) ? 'is-invalid' : ''; ?>"
-                            id="message" placeholder="What can we help you?"><?php echo $contactData['message']; ?></textarea>
+                            id="message" placeholder="Tulis pesan atau pertanyaan Anda di sini..."><?php echo $contactData['message']; ?></textarea>
                         <?php if (isset($contactErrors['message'])): ?>
                         <div class="invalid-feedback"><?php echo $contactErrors['message']; ?></div>
                         <?php endif; ?>
 
-                        <button type="submit" class="form-control">Send Message</button>
+                        <button type="submit" class="form-control">Kirim Pesan</button>
                     </form>
                 </div>
 
