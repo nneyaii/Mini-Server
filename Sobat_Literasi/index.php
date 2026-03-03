@@ -291,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     <?php
                     $latestNews = [
                         [
-                            'img'        => 'images/news/medium-shot-volunteers-with-clothing-donations.jpg',
+                            'img'        => 'images/news/siswa-belajar.jpg',
                             'categories' => ['Tips Belajar Siswa', 'Strategi Lulus Ujian'],
                             'date'       => '3 Mei, 2026',
                             'author'     => 'Admin',
@@ -302,7 +302,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
 Selain itu, budaya literasi membantu meningkatkan prestasi akademik karena siswa terbiasa mencari referensi tambahan di luar buku pelajaran utama. Dengan membaca secara rutin, kosakata menjadi lebih kaya, kemampuan menulis meningkat, dan daya konsentrasi semakin baik. Literasi juga membentuk karakter siswa agar lebih teliti, sabar, dan tidak mudah terpengaruh oleh informasi yang belum jelas kebenarannya. Oleh karena itu, membangun kebiasaan membaca sejak dini, seperti meluangkan waktu 15–30 menit setiap hari untuk membaca buku atau artikel edukatif, sangat penting dalam mendukung keberhasilan belajar siswa SMA.',
                         ],
                         [
-                            'img'        => 'images/news/medium-shot-people-collecting-foodstuff.jpg',
+                            'img'        => 'images/news/siswa-membaca.jpg',
                             'categories' => ['Literasi', 'Etika',],
                             'date'       => '10 Februari, 2026',
                             'author'     => 'Admin',
