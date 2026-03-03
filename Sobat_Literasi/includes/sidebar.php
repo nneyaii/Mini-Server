@@ -16,18 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['subscribe-email'])) {
 }
 
 $categories = [
-    ['label' => 'Drinking water',      'count' => 20],
-    ['label' => 'Food Donation',        'count' => 30],
-    ['label' => 'Children Education',   'count' => 10],
-    ['label' => 'Poverty Development',  'count' => 15],
-    ['label' => 'Clothing Donation',    'count' => 20],
+    ['label' => 'Artikel Literasi',      'count' => 20],
+    ['label' => 'Tips Belajar SMA',        'count' => 30],
+    ['label' => 'Review Buku Pelajar',   'count' => 10],
+    ['label' => 'Strategi Lulus Ujian',  'count' => 15],
+    ['label' => 'Karya Tulis Siswa',    'count' => 20],
 ];
 
-$tags = ['Donation','Clothing','Food','Children','Education','Poverty','Clean Water'];
+$tags = ['Artikel Literasi','Tips Belajar SMA','Review Buku Pelajar','Strategi Lulus Ujian','Karya Tulis Siswa'];
 
 $recentNews = [
-    ['title' => 'Food donation area',   'date' => 'October 16, 2036', 'img' => 'images/news/africa-humanitarian-aid-doctor.jpg'],
-    ['title' => 'Volunteering Clean',   'date' => 'October 24, 2036', 'img' => 'images/news/close-up-happy-people-working-together.jpg'],
+    ['title' => 'Cara Lulus UTBK Dengan Strategi Tepat',   'date' => 'October 16, 2036', 'img' => 'images/news/africa-humanitarian-aid-doctor.jpg'],
+    ['title' => 'Pentingnya Membaca 15 Menit Sehari',   'date' => 'October 24, 2036', 'img' => 'images/news/close-up-happy-people-working-together.jpg'],
 ];
 ?>
 
@@ -41,7 +41,7 @@ $recentNews = [
 </form>
 
 <!-- Recent News -->
-<h5 class="mt-5 mb-3">Recent news</h5>
+<h5 class="mt-5 mb-3">Artikel Terbaru</h5>
 <?php foreach ($recentNews as $rn): ?>
 <div class="news-block news-block-two-col d-flex mt-4">
     <div class="news-block-two-col-image-wrap">
@@ -62,7 +62,7 @@ $recentNews = [
 
 <!-- Categories -->
 <div class="category-block d-flex flex-column">
-    <h5 class="mb-3">Categories</h5>
+    <h5 class="mb-3">Kategori</h5>
     <?php foreach ($categories as $cat): ?>
     <a href="news.php?category=<?php echo urlencode($cat['label']); ?>" class="category-block-link">
         <?php echo htmlspecialchars($cat['label']); ?>

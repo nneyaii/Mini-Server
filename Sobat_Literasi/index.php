@@ -28,10 +28,10 @@ $causes = [
 
 // Data testimonial
 $testimonials = [
-    ['quote' => 'Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito charity theme', 'name' => 'Maria',  'role' => 'Boss',         'avatar' => 'images/avatar/portrait-beautiful-young-woman-standing-grey-wall.jpg'],
-    ['quote' => 'Sed leo nisl, posuere at molestie ac, suscipit auctor mauris quis metus tempor orci',      'name' => 'Thomas', 'role' => 'Partner',      'avatar' => 'images/avatar/portrait-young-redhead-bearded-male.jpg'],
-    ['quote' => 'Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito charity theme', 'name' => 'Jane',   'role' => 'Advisor',      'avatar' => 'images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg'],
-    ['quote' => 'Sed leo nisl, posuere at molestie ac, suscipit auctor mauris quis metus tempor orci',      'name' => 'Bob',    'role' => 'Entrepreneur', 'avatar' => 'images/avatar/studio-portrait-emotional-happy-funny.jpg'],
+    ['quote' => 'Tampilannya bersih dan nyaman dibaca. Materi literasinya juga tersusun rapi, jadi enak dipelajari.', 'name' => 'Aini',  'role' => 'Pelajar SMA',         'avatar' => 'images/avatar/portrait-beautiful-young-woman-standing-grey-wall.jpg'],
+    ['quote' => 'Website Sobat Literasi sangat informatif dan mudah digunakan. Saya jadi cepat menemukan informasi program dan cara mendaftar sebagai relawan.',      'name' => 'Vinno', 'role' => 'Relawan',      'avatar' => 'images/avatar/portrait-young-redhead-bearded-male.jpg'],
+    ['quote' => 'Saya suka karena informasinya lengkap, mulai dari kegiatan sampai kontak yang bisa dihubungi. Sangat membantu!', 'name' => 'Figa',   'role' => 'Pelajar SMA',      'avatar' => 'images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg'],
+    ['quote' => 'Website ini memudahkan saya mendapatkan informasi tentang program literasi tanpa harus bertanya langsung. Praktis dan jelas.',      'name' => 'Azriel',    'role' => 'Pelajar SMA', 'avatar' => 'images/avatar/studio-portrait-emotional-happy-funny.jpg'],
 ];
 
 // Handle volunteer form
@@ -269,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     <img src="images/smiling-casual-woman-dressed-volunteer-t-shirt-with-badge.jpg"
                         class="volunteer-image img-fluid" alt="">
                     <div class="custom-block-body text-center">
-                        <h4 class="text-white mt-lg-3 mb-lg-3">About Volunteering</h4>
+                        <h4 class="text-white mt-lg-3 mb-lg-3">About Relawan</h4>
                         <p class="text-white">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm
                             tokito Professional charity theme based</p>
                     </div>
@@ -284,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-12 mb-5">
-                    <h2>Latest News</h2>
+                    <h2>Artikel</h2>
                 </div>
 
                 <div class="col-lg-7 col-12">
@@ -292,21 +292,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     $latestNews = [
                         [
                             'img'        => 'images/news/medium-shot-volunteers-with-clothing-donations.jpg',
-                            'categories' => ['Lifestyle', 'Clothing Donation'],
-                            'date'       => 'October 12, 2036',
+                            'categories' => ['Tips Belajar Siswa', 'Strategi Lulus Ujian'],
+                            'date'       => '3 Mei, 2026',
                             'author'     => 'Admin',
                             'comments'   => 32,
-                            'title'      => 'Clothing donation to urban area',
-                            'body'       => 'Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito Professional charity theme based on Bootstrap',
+                            'title'      => 'Pentingnya Literasi Digital untuk Pelajar SMA',
+                            'body'       => 'Budaya literasi merupakan fondasi penting dalam membentuk generasi muda yang cerdas, kritis, dan berwawasan luas. Bagi siswa SMA, literasi tidak hanya sebatas kemampuan membaca dan menulis, tetapi juga mencakup kemampuan memahami, menganalisis, serta mengevaluasi informasi yang diperoleh dari berbagai sumber. Di tingkat SMA, materi pelajaran semakin kompleks dan membutuhkan kemampuan berpikir tingkat tinggi. Siswa yang memiliki kebiasaan membaca akan lebih mudah memahami konsep, menghubungkan teori dengan kehidupan sehari-hari, serta menyampaikan pendapat secara logis dan terstruktur.
+
+Selain itu, budaya literasi membantu meningkatkan prestasi akademik karena siswa terbiasa mencari referensi tambahan di luar buku pelajaran utama. Dengan membaca secara rutin, kosakata menjadi lebih kaya, kemampuan menulis meningkat, dan daya konsentrasi semakin baik. Literasi juga membentuk karakter siswa agar lebih teliti, sabar, dan tidak mudah terpengaruh oleh informasi yang belum jelas kebenarannya. Oleh karena itu, membangun kebiasaan membaca sejak dini, seperti meluangkan waktu 15–30 menit setiap hari untuk membaca buku atau artikel edukatif, sangat penting dalam mendukung keberhasilan belajar siswa SMA.',
                         ],
                         [
                             'img'        => 'images/news/medium-shot-people-collecting-foodstuff.jpg',
-                            'categories' => ['Food', 'Donation', 'Caring'],
-                            'date'       => 'October 20, 2036',
+                            'categories' => ['Literasi', 'Etika',],
+                            'date'       => '10 Februari, 2026',
                             'author'     => 'Admin',
                             'comments'   => 35,
-                            'title'      => 'Food donation area',
-                            'body'       => 'Sed leo nisl, posuere at molestie ac, suscipit auctor mauris. Etiam quis metus elementum, tempor risus vel, condimentum orci',
+                            'title'      => 'Literasi Digital dan Etika Bermedia Sosial',
+                            'body'       => 'Di era perkembangan teknologi yang pesat, siswa SMA tidak dapat dipisahkan dari penggunaan internet dan media sosial. Literasi digital menjadi keterampilan yang sangat penting agar siswa mampu menggunakan teknologi secara bijak dan bertanggung jawab. Literasi digital bukan hanya kemampuan mengoperasikan perangkat atau aplikasi, tetapi juga kemampuan memahami, menilai, dan memanfaatkan informasi digital secara kritis. Siswa perlu mampu membedakan antara informasi yang benar dan hoaks, serta tidak mudah terprovokasi oleh berita yang belum terverifikasi.
+
+Selain itu, etika bermedia sosial juga menjadi bagian penting dalam literasi digital. Dalam berinteraksi di dunia maya, siswa harus menggunakan bahasa yang sopan, menghargai pendapat orang lain, serta menghindari tindakan seperti menyebarkan ujaran kebencian, perundungan daring (cyberbullying), atau membagikan informasi pribadi secara sembarangan. Media sosial seharusnya dimanfaatkan untuk hal-hal positif, seperti berbagi informasi edukatif, berdiskusi secara sehat, dan membangun jejaring yang bermanfaat. Dengan memiliki literasi digital yang baik serta menerapkan etika bermedia sosial, siswa SMA dapat menjadi generasi yang cerdas, bertanggung jawab, dan mampu memanfaatkan teknologi untuk mendukung perkembangan diri dan prestasi akademik.',
                         ],
                     ];
                     foreach ($latestNews as $i => $news):
@@ -358,7 +362,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 mx-auto">
-                    <h2 class="mb-lg-3">Happy customers</h2>
+                    <h2 class="mb-lg-3">Cerita Sobat Literasi</h2>
 
                     <div id="testimonial-carousel" class="carousel carousel-fade slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
@@ -404,7 +408,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                             <img src="images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg"
                                 class="img-fluid avatar-image" alt="">
                             <div class="d-flex flex-column justify-content-center ms-3">
-                                <p class="mb-0">Clara Barton</p>
+                                <p class="mb-0">Aini</p>
                                 <p class="mb-0"><strong>HR &amp; Office Manager</strong></p>
                             </div>
                         </div>
