@@ -1,6 +1,6 @@
 <?php
-$pageTitle       = 'Sobat Literasi - Free Bootstrap 5 CSS Template';
-$pageDescription = 'Sobat Literasi - Non-profit Organization';
+$pageTitle       = 'Sobat Literasi';
+$pageDescription = 'Sobat Literasi';
 $activePage      = 'home';
 
 include 'includes/head.php';
@@ -34,28 +34,6 @@ $testimonials = [
     ['quote' => 'Website ini memudahkan saya mendapatkan informasi tentang program literasi tanpa harus bertanya langsung. Praktis dan jelas.',      'name' => 'Azriel',    'role' => 'Pelajar SMA', 'avatar' => 'images/avatar/studio-portrait-emotional-happy-funny.jpg'],
 ];
 
-// Handle volunteer form
-$volunteerSuccess = false;
-$volunteerErrors  = [];
-$volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['volunteer-name'])) {
-    $volunteerData['name']    = htmlspecialchars(trim($_POST['volunteer-name'] ?? ''));
-    $volunteerData['email']   = htmlspecialchars(trim($_POST['volunteer-email'] ?? ''));
-    $volunteerData['subject'] = htmlspecialchars(trim($_POST['volunteer-subject'] ?? ''));
-    $volunteerData['message'] = htmlspecialchars(trim($_POST['volunteer-message'] ?? ''));
-
-    if (empty($volunteerData['name']))    $volunteerErrors['name']    = 'Nama wajib diisi.';
-    if (empty($volunteerData['email']) || !filter_var($_POST['volunteer-email'], FILTER_VALIDATE_EMAIL))
-                                    $volunteerErrors['email']   = 'Email tidak valid.';
-    if (empty($volunteerData['subject'])) $volunteerErrors['subject'] = 'Subject wajib diisi.';
-
-    if (empty($volunteerErrors)) {
-        // Proses simpan/kirim email di sini
-        $volunteerSuccess = true;
-        $volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
-    }
-}
 
 // Handle contact form
 $contactSuccess = false;
@@ -166,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                 </div>
                 <div class="col-lg-5 col-12">
                     <a href="materi.php" class="me-4">Lihat Materi</a>
-                    <a href="" class="custom-btn btn smoothscroll">Menjadi Relawan</a>
+                    <a href="relawan.php" class="custom-btn btn smoothscroll">Menjadi Relawan</a>
                 </div>
             </div>
         </div>
@@ -199,86 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
         </div>
     </section>
 
-
-    <!-- VOLUNTEER SECTION -->
-    <section class="volunteer-section section-padding" id="section_4">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-12">
-                    <h2 class="text-white mb-4">Volunteer</h2>
-
-                    <?php if ($volunteerSuccess): ?>
-                    <div class="alert alert-success">
-                        Terima kasih! Pendaftaran volunteer Anda telah diterima.
-                    </div>
-                    <?php endif; ?>
-
-                    <form class="custom-form volunteer-form mb-5 mb-lg-0"
-                          action="index.php#section_4" method="post" role="form"
-                          enctype="multipart/form-data">
-                        <h3 class="mb-4">Become a volunteer today</h3>
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <input type="text" name="volunteer-name" id="volunteer-name"
-                                    class="form-control <?php echo isset($volunteerErrors['name']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jack Doe" required
-                                    value="<?php echo $volunteerData['name']; ?>">
-                                <?php if (isset($volunteerErrors['name'])): ?>
-                                <div class="invalid-feedback"><?php echo $volunteerErrors['name']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <input type="email" name="volunteer-email" id="volunteer-email"
-                                    pattern="[^ @]*@[^ @]*"
-                                    class="form-control <?php echo isset($volunteerErrors['email']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jackdoe@gmail.com" required
-                                    value="<?php echo $volunteerData['email']; ?>">
-                                <?php if (isset($volunteerErrors['email'])): ?>
-                                <div class="invalid-feedback"><?php echo $volunteerErrors['email']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <input type="text" name="volunteer-subject" id="volunteer-subject"
-                                    class="form-control <?php echo isset($volunteerErrors['subject']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Subject" required
-                                    value="<?php echo $volunteerData['subject']; ?>">
-                                <?php if (isset($volunteerErrors['subject'])): ?>
-                                <div class="invalid-feedback"><?php echo $volunteerErrors['subject']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <div class="input-group input-group-file">
-                                    <input type="file" class="form-control" id="inputGroupFile02" name="cv">
-                                    <label class="input-group-text" for="inputGroupFile02">Upload your CV</label>
-                                    <i class="bi-cloud-arrow-up ms-auto"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message"
-                            placeholder="Comment (Optional)"><?php echo $volunteerData['message']; ?></textarea>
-
-                        <button type="submit" class="form-control">Submit</button>
-                    </form>
-                </div>
-
-                <div class="col-lg-6 col-12">
-                    <img src="images/smiling-casual-woman-dressed-volunteer-t-shirt-with-badge.jpg"
-                        class="volunteer-image img-fluid" alt="">
-                    <div class="custom-block-body text-center">
-                        <h4 class="text-white mt-lg-3 mb-lg-3">About Relawan</h4>
-                        <p class="text-white">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm
-                            tokito Professional charity theme based</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
     <!-- NEWS SECTION -->
     <section class="news-section section-padding" id="section_5">
         <div class="container">
@@ -291,28 +189,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     <?php
                     $latestNews = [
                         [
-                            'img'        => 'images/news/medium-shot-volunteers-with-clothing-donations.jpg',
+                            'img'        => 'images/news/1.png',
                             'categories' => ['Tips Belajar Siswa', 'Strategi Lulus Ujian'],
                             'date'       => '3 Mei, 2026',
                             'author'     => 'Admin',
                             'comments'   => 32,
                             'title'      => 'Pentingnya Literasi Digital untuk Pelajar SMA',
-                            'body'       => 'Budaya literasi merupakan fondasi penting dalam membentuk generasi muda yang cerdas, kritis, dan berwawasan luas. Bagi siswa SMA, literasi tidak hanya sebatas kemampuan membaca dan menulis, tetapi juga mencakup kemampuan memahami, menganalisis, serta mengevaluasi informasi yang diperoleh dari berbagai sumber. Di tingkat SMA, materi pelajaran semakin kompleks dan membutuhkan kemampuan berpikir tingkat tinggi. Siswa yang memiliki kebiasaan membaca akan lebih mudah memahami konsep, menghubungkan teori dengan kehidupan sehari-hari, serta menyampaikan pendapat secara logis dan terstruktur.
-
-Selain itu, budaya literasi membantu meningkatkan prestasi akademik karena siswa terbiasa mencari referensi tambahan di luar buku pelajaran utama. Dengan membaca secara rutin, kosakata menjadi lebih kaya, kemampuan menulis meningkat, dan daya konsentrasi semakin baik. Literasi juga membentuk karakter siswa agar lebih teliti, sabar, dan tidak mudah terpengaruh oleh informasi yang belum jelas kebenarannya. Oleh karena itu, membangun kebiasaan membaca sejak dini, seperti meluangkan waktu 15–30 menit setiap hari untuk membaca buku atau artikel edukatif, sangat penting dalam mendukung keberhasilan belajar siswa SMA.',
+                            'body'       => 'Di era digital, kebiasaan membaca tidak hanya dilakukan melalui buku cetak, tetapi juga melalui berbagai media digital. Literasi digital membantu siswa SMA memanfaatkan teknologi untuk membaca, mencari informasi, dan menambah wawasan secara lebih luas.',
                         ],
                         [
-                            'img'        => 'images/news/medium-shot-people-collecting-foodstuff.jpg',
+                            'img'        => 'images/news/2.png',
                             'categories' => ['Literasi', 'Etika',],
                             'date'       => '10 Februari, 2026',
                             'author'     => 'Admin',
                             'comments'   => 35,
                             'title'      => 'Literasi Digital dan Etika Bermedia Sosial',
-                            'body'       => 'Di era perkembangan teknologi yang pesat, siswa SMA tidak dapat dipisahkan dari penggunaan internet dan media sosial. Literasi digital menjadi keterampilan yang sangat penting agar siswa mampu menggunakan teknologi secara bijak dan bertanggung jawab. Literasi digital bukan hanya kemampuan mengoperasikan perangkat atau aplikasi, tetapi juga kemampuan memahami, menilai, dan memanfaatkan informasi digital secara kritis. Siswa perlu mampu membedakan antara informasi yang benar dan hoaks, serta tidak mudah terprovokasi oleh berita yang belum terverifikasi.
+                            'body'       => 'Media sosial telah menjadi bagian dari kehidupan sehari-hari siswa SMA. Namun, penggunaan media sosial perlu disertai dengan literasi digital dan etika agar siswa dapat menggunakan teknologi secara bijak, bertanggung jawab, serta terhindar dari dampak negatif di dunia digital.',
+                    ]];
 
-Selain itu, etika bermedia sosial juga menjadi bagian penting dalam literasi digital. Dalam berinteraksi di dunia maya, siswa harus menggunakan bahasa yang sopan, menghargai pendapat orang lain, serta menghindari tindakan seperti menyebarkan ujaran kebencian, perundungan daring (cyberbullying), atau membagikan informasi pribadi secara sembarangan. Media sosial seharusnya dimanfaatkan untuk hal-hal positif, seperti berbagi informasi edukatif, berdiskusi secara sehat, dan membangun jejaring yang bermanfaat. Dengan memiliki literasi digital yang baik serta menerapkan etika bermedia sosial, siswa SMA dapat menjadi generasi yang cerdas, bertanggung jawab, dan mampu memanfaatkan teknologi untuk mendukung perkembangan diri dan prestasi akademik.',
-                        ],
-                    ];
                     foreach ($latestNews as $i => $news):
                     ?>
                     <div class="news-block <?php echo $i > 0 ? 'mt-3' : ''; ?>">
@@ -403,19 +297,19 @@ Selain itu, etika bermedia sosial juga menjadi bagian penting dalam literasi dig
 
                 <div class="col-lg-4 col-12 ms-auto mb-5 mb-lg-0">
                     <div class="contact-info-wrap">
-                        <h2>Get in touch</h2>
+                        <h2>Hubungi Kami</h2>
                         <div class="contact-image-wrap d-flex flex-wrap">
                             <img src="images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg"
                                 class="img-fluid avatar-image" alt="">
                             <div class="d-flex flex-column justify-content-center ms-3">
-                                <p class="mb-0">Aini</p>
-                                <p class="mb-0"><strong>HR &amp; Office Manager</strong></p>
+                                <p class="mb-0">Faizan</p>
+                                <p class="mb-0"><strong>Tim Hubungan Masyarakat</strong></p>
                             </div>
                         </div>
                         <div class="contact-info">
-                            <h5 class="mb-3">Contact Information</h5>
+                            <h5 class="mb-3">Informasi Kontak</h5>
                             <p class="d-flex mb-2">
-                                <i class="bi-geo-alt me-2"></i>Akershusstranda 20, 0150 Oslo, Norway
+                                <i class="bi-geo-alt me-2"></i>Jalan Simpang Lima, Semarang, Jawa Tengah
                             </p>
                             <p class="d-flex mb-2">
                                 <i class="bi-telephone me-2"></i>
@@ -423,9 +317,8 @@ Selain itu, etika bermedia sosial juga menjadi bagian penting dalam literasi dig
                             </p>
                             <p class="d-flex">
                                 <i class="bi-envelope me-2"></i>
-                                <a href="mailto:donate@charity.org">donate@charity.org</a>
+                                <a href="mailto:donate@charity.org">admin@solit.org</a>
                             </p>
-                            <a href="#" class="custom-btn btn mt-3">Get Direction</a>
                         </div>
                     </div>
                 </div>

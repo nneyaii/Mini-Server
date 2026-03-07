@@ -26,8 +26,8 @@ $categories = [
 $tags = ['Artikel Literasi','Tips Belajar SMA','Review Buku Pelajar','Strategi Lulus Ujian','Karya Tulis Siswa'];
 
 $recentNews = [
-    ['title' => 'Cara Lulus UTBK Dengan Strategi Tepat',   'date' => 'October 16, 2036', 'img' => 'images/news/africa-humanitarian-aid-doctor.jpg'],
-    ['title' => 'Pentingnya Membaca 15 Menit Sehari',   'date' => 'October 24, 2036', 'img' => 'images/news/close-up-happy-people-working-together.jpg'],
+    ['title' => 'Cara Lulus UTBK Dengan Strategi Tepat',   'date' => 'October 16, 2026', 'img' => 'images/news/3.png'],
+    ['title' => 'Pentingnya Membaca 15 Menit Sehari',   'date' => 'October 24, 2026', 'img' => 'images/news/4.png'],
 ];
 ?>
 
@@ -80,20 +80,3 @@ $recentNews = [
     </a>
     <?php endforeach; ?>
 </div>
-
-<!-- Newsletter -->
-<?php if ($sidebarSubscribeSuccess): ?>
-<div class="alert alert-success mt-3">Terima kasih sudah subscribe!</div>
-<?php else: ?>
-<form class="custom-form subscribe-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" role="form">
-    <h5 class="mb-4">Newsletter Form</h5>
-    <?php if ($sidebarSubscribeError): ?>
-    <div class="alert alert-danger"><?php echo htmlspecialchars($sidebarSubscribeError); ?></div>
-    <?php endif; ?>
-    <input type="email" name="subscribe-email" id="subscribe-email" pattern="[^ @]*@[^ @]*"
-        class="form-control" placeholder="Email Address" required>
-    <div class="col-lg-12 col-12">
-        <button type="submit" class="form-control">Subscribe</button>
-    </div>
-</form>
-<?php endif; ?>

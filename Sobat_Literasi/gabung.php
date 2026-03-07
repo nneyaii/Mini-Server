@@ -7,6 +7,29 @@ $donateSuccess = false;
 $donateErrors  = [];
 $donateData    = ['name' => '', 'email' => '', 'frequency' => 'one-time', 'amount' => '', 'custom_amount' => '', 'payment' => ''];
 
+// Handle volunteer form
+$volunteerSuccess = false;
+$volunteerErrors  = [];
+$volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['volunteer-name'])) {
+    $volunteerData['name']    = htmlspecialchars(trim($_POST['volunteer-name'] ?? ''));
+    $volunteerData['email']   = htmlspecialchars(trim($_POST['volunteer-email'] ?? ''));
+    $volunteerData['subject'] = htmlspecialchars(trim($_POST['volunteer-subject'] ?? ''));
+    $volunteerData['message'] = htmlspecialchars(trim($_POST['volunteer-message'] ?? ''));
+
+    if (empty($volunteerData['name']))    $volunteerErrors['name']    = 'Nama wajib diisi.';
+    if (empty($volunteerData['email']) || !filter_var($_POST['volunteer-email'], FILTER_VALIDATE_EMAIL))
+                                    $volunteerErrors['email']   = 'Email tidak valid.';
+    if (empty($volunteerData['subject'])) $volunteerErrors['subject'] = 'Subject wajib diisi.';
+
+    if (empty($volunteerErrors)) {
+        // Proses simpan/kirim email di sini
+        $volunteerSuccess = true;
+        $volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $donateData['name']          = htmlspecialchars(trim($_POST['donation-name'] ?? ''));
     $donateData['email']         = htmlspecialchars(trim($_POST['donation-email'] ?? ''));
@@ -169,5 +192,83 @@ include 'includes/head.php';
         </div>
     </section>
 </main>
+
+<!-- VOLUNTEER SECTION -->
+    <section class="volunteer-section section-padding" id="section_4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <h2 class="text-white mb-4">Volunteer</h2>
+
+                    <?php if ($volunteerSuccess): ?>
+                    <div class="alert alert-success">
+                        Terima kasih! Pendaftaran volunteer Anda telah diterima.
+                    </div>
+                    <?php endif; ?>
+
+                    <form class="custom-form volunteer-form mb-5 mb-lg-0"
+                          action="index.php#section_4" method="post" role="form"
+                          enctype="multipart/form-data">
+                        <h3 class="mb-4">Become a volunteer today</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <input type="text" name="volunteer-name" id="volunteer-name"
+                                    class="form-control <?php echo isset($volunteerErrors['name']) ? 'is-invalid' : ''; ?>"
+                                    placeholder="Jack Doe" required
+                                    value="<?php echo $volunteerData['name']; ?>">
+                                <?php if (isset($volunteerErrors['name'])): ?>
+                                <div class="invalid-feedback"><?php echo $volunteerErrors['name']; ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <input type="email" name="volunteer-email" id="volunteer-email"
+                                    pattern="[^ @]*@[^ @]*"
+                                    class="form-control <?php echo isset($volunteerErrors['email']) ? 'is-invalid' : ''; ?>"
+                                    placeholder="Jackdoe@gmail.com" required
+                                    value="<?php echo $volunteerData['email']; ?>">
+                                <?php if (isset($volunteerErrors['email'])): ?>
+                                <div class="invalid-feedback"><?php echo $volunteerErrors['email']; ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <input type="text" name="volunteer-subject" id="volunteer-subject"
+                                    class="form-control <?php echo isset($volunteerErrors['subject']) ? 'is-invalid' : ''; ?>"
+                                    placeholder="Subject" required
+                                    value="<?php echo $volunteerData['subject']; ?>">
+                                <?php if (isset($volunteerErrors['subject'])): ?>
+                                <div class="invalid-feedback"><?php echo $volunteerErrors['subject']; ?></div>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <div class="input-group input-group-file">
+                                    <input type="file" class="form-control" id="inputGroupFile02" name="cv">
+                                    <label class="input-group-text" for="inputGroupFile02">Upload your CV</label>
+                                    <i class="bi-cloud-arrow-up ms-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message"
+                            placeholder="Comment (Optional)"><?php echo $volunteerData['message']; ?></textarea>
+
+                        <button type="submit" class="form-control">Submit</button>
+                    </form>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <img src="images/smiling-casual-woman-dressed-volunteer-t-shirt-with-badge.jpg"
+                        class="volunteer-image img-fluid" alt="">
+                    <div class="custom-block-body text-center">
+                        <h4 class="text-white mt-lg-3 mb-lg-3">About Relawan</h4>
+                        <p class="text-white">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm
+                            tokito Professional charity theme based</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <?php include 'includes/footer.php'; ?>
