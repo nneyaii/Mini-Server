@@ -2,15 +2,11 @@
 $pageTitle  = 'Sobat Literasi';
 $activePage = 'gabung';
 
-// Handle form donasi
+// Handle form relawan
 $donateSuccess = false;
 $donateErrors  = [];
 $donateData    = ['name' => '', 'email' => '', 'frequency' => 'one-time', 'amount' => '', 'custom_amount' => '', 'payment' => ''];
 
-// Handle volunteer form
-$volunteerSuccess = false;
-$volunteerErrors  = [];
-$volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['volunteer-name'])) {
     $volunteerData['name']    = htmlspecialchars(trim($_POST['volunteer-name'] ?? ''));
@@ -58,7 +54,7 @@ include 'includes/head.php';
 <?php include 'includes/navbar.php'; ?>
 
 <main>
-    <section class="donate-section">
+    <section class="gabung-section">
         <div class="section-overlay"></div>
         <div class="container">
             <div class="row">
@@ -66,75 +62,19 @@ include 'includes/head.php';
 
                     <?php if ($donateSuccess): ?>
                     <div class="alert alert-success text-center p-4">
-                        <h4>🎉 Terima kasih atas donasi Anda!</h4>
-                        <p>Donasi Anda sangat berarti bagi kami. Kami akan segera memproses pembayaran Anda.</p>
+                        <h4>🎉 Terima kasih atas ketersediaan Anda!</h4>
+                        <p>Respon Anda sangat berarti bagi kami. Kami akan segera memproses permintaan Anda.</p>
                         <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
                     </div>
                     <?php else: ?>
 
-                    <form class="custom-form donate-form" action="donate.php" method="post" role="form">
-                        <h3 class="mb-4">Make a donation</h3>
+                    <form class="custom-form gabung-form" action="gabung.php" method="post" role="form">
+                        <h3 class="mb-4">Pendaftaran Relawan</h3>
 
                         <div class="row">
-                            <!-- Donation Frequency -->
+                    <!-- Personal Info -->
                             <div class="col-lg-12 col-12">
-                                <h5 class="mb-3">Donation Frequency</h5>
-                            </div>
-                            <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
-                                <div class="form-check form-check-radio">
-                                    <input class="form-check-input" type="radio" name="DonationFrequency"
-                                        id="DonationFrequencyOne" value="one-time"
-                                        <?php echo ($donateData['frequency'] !== 'monthly') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="DonationFrequencyOne">One Time</label>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
-                                <div class="form-check form-check-radio">
-                                    <input class="form-check-input" type="radio" name="DonationFrequency"
-                                        id="DonationFrequencyMonthly" value="monthly"
-                                        <?php echo ($donateData['frequency'] === 'monthly') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="DonationFrequencyMonthly">Monthly</label>
-                                </div>
-                            </div>
-
-                            <!-- Select Amount -->
-                            <div class="col-lg-12 col-12">
-                                <h5 class="mt-2 mb-3">Select an amount</h5>
-                                <?php if (isset($donateErrors['amount'])): ?>
-                                <div class="text-danger small mb-2"><?php echo $donateErrors['amount']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <?php
-                            $amounts = [10, 15, 20, 30, 45, 50];
-                            foreach ($amounts as $i => $amount):
-                                $radioId = 'flexRadioDefault' . ($i + 1);
-                            ?>
-                            <div class="col-lg-3 col-md-6 col-6 form-check-group">
-                                <div class="form-check form-check-radio">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="<?php echo $radioId; ?>" value="<?php echo $amount; ?>"
-                                        <?php echo ($donateData['amount'] == $amount) ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="<?php echo $radioId; ?>">
-                                        $<?php echo $amount; ?>
-                                    </label>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-
-                            <div class="col-lg-6 col-12 form-check-group">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">$</span>
-                                    <input type="text" name="custom-amount" class="form-control"
-                                        placeholder="Custom amount"
-                                        value="<?php echo $donateData['custom_amount']; ?>"
-                                        aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-
-                            <!-- Personal Info -->
-                            <div class="col-lg-12 col-12">
-                                <h5 class="mt-1">Personal Info</h5>
+                                <h5 class="mt-1">Data Diri</h5>
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
                                 <input type="text" name="donation-name" id="donation-name"
@@ -156,32 +96,81 @@ include 'includes/head.php';
                                 <?php endif; ?>
                             </div>
 
-                            <!-- Payment -->
+
+                            <!-- Pernah Jadi Relawan -->
+                            <!-- Pernah Jadi Relawan -->
                             <div class="col-lg-12 col-12">
-                                <h5 class="mt-4 pt-1">Choose Payment</h5>
+                                <h5 class="mt-1">Pernah Jadi Relawan?</h5>
+                            </div>
+
+                            <div class="col-lg-6 col-6 form-check-group">
+                                <input type="radio" class="btn-check" name="pengalaman_relawan" id="relawanYa" value="ya" autocomplete="off">
+                                <label class="custom-btn w-100 text-center" for="relawanYa">Ya</label>
+                            </div>
+
+                            <div class="col-lg-6 col-6 form-check-group">
+                                <input type="radio" class="btn-check" name="pengalaman_relawan" id="relawanTidak" value="tidak" autocomplete="off">
+                                <label class="custom-btn w-100 text-center" for="relawanTidak">Tidak</label>
+                            </div>
+
+                            <!-- Alasan Menjadi Relawan -->
+                            <div class="col-lg-12 col-12">
+                                <h5 class="mt-1">Alasan Ingin Menjadi Relawan</h5>
+                            </div>
+
+                            <div class="col-lg-12 col-12 mt-1">
+                                <textarea 
+                                    class="form-control" 
+                                    name="alasan_relawan" 
+                                    rows="4" 
+                                    placeholder="Tuliskan alasan Anda ingin bergabung sebagai relawan..."
+                                    required></textarea>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-lg-12 col-12">
+                                <h5 class="mt-1 pt-1">Pilih Status </h5>
                                 <?php if (isset($donateErrors['payment'])): ?>
                                 <div class="text-danger small mb-2"><?php echo $donateErrors['payment']; ?></div>
                                 <?php endif; ?>
                             </div>
-                            <div class="col-lg-12 col-12 mt-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="DonationPayment"
-                                        id="flexRadioDefault9" value="card"
-                                        <?php echo ($donateData['payment'] === 'card') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="flexRadioDefault9">
-                                        <i class="bi-credit-card custom-icon ms-1"></i> Debit or Credit card
+                                    <input class="form-check-input" type="radio" name="status" id="pelajar" value="pelajar">
+                                    <label class="form-check-label" for="pelajar">
+                                    <i class="bi bi-mortarboard custom-icon ms-1"></i> Pelajar
                                     </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="DonationPayment"
-                                        id="flexRadioDefault10" value="paypal"
-                                        <?php echo ($donateData['payment'] === 'paypal') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="flexRadioDefault10">
-                                        <i class="bi-paypal custom-icon ms-1"></i> Paypal
-                                    </label>
-                                </div>
+                                    </div>
 
-                                <button type="submit" class="form-control mt-4">Submit Donation</button>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="guru" value="guru">
+                                    <label class="form-check-label" for="guru">
+                                    <i class="bi bi-easel custom-icon ms-1"></i> Guru
+                                    </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="umum" value="umum">
+                                    <label class="form-check-label" for="umum">
+                                    <i class="bi bi-people custom-icon ms-1"></i> Umum
+                                    </label>
+                                    </div>
+
+                                <!-- Persetujuan -->
+                                <div class="col-lg-12 col-12">
+                                    <div class="form-check mt-4">
+                                        <input 
+                                            class="form-check-input" 
+                                            type="checkbox" 
+                                            id="persetujuanRelawan" 
+                                            name="persetujuan_relawan" 
+                                            required>
+                                            
+                                        <label class="form-check-label" for="persetujuanRelawan">
+                                            Saya bersedia berpartisipasi dalam kegiatan relawan dan mengikuti aturan yang berlaku.
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="form-control mt-4">Kirim Pendaftaran</button>
                             </div>
                         </div>
                     </form>
@@ -192,83 +181,3 @@ include 'includes/head.php';
         </div>
     </section>
 </main>
-
-<!-- VOLUNTEER SECTION -->
-    <section class="volunteer-section section-padding" id="section_4">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-12">
-                    <h2 class="text-white mb-4">Volunteer</h2>
-
-                    <?php if ($volunteerSuccess): ?>
-                    <div class="alert alert-success">
-                        Terima kasih! Pendaftaran volunteer Anda telah diterima.
-                    </div>
-                    <?php endif; ?>
-
-                    <form class="custom-form volunteer-form mb-5 mb-lg-0"
-                          action="index.php#section_4" method="post" role="form"
-                          enctype="multipart/form-data">
-                        <h3 class="mb-4">Become a volunteer today</h3>
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <input type="text" name="volunteer-name" id="volunteer-name"
-                                    class="form-control <?php echo isset($volunteerErrors['name']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jack Doe" required
-                                    value="<?php echo $volunteerData['name']; ?>">
-                                <?php if (isset($volunteerErrors['name'])): ?>
-                                <div class="invalid-feedback"><?php echo $volunteerErrors['name']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <input type="email" name="volunteer-email" id="volunteer-email"
-                                    pattern="[^ @]*@[^ @]*"
-                                    class="form-control <?php echo isset($volunteerErrors['email']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jackdoe@gmail.com" required
-                                    value="<?php echo $volunteerData['email']; ?>">
-                                <?php if (isset($volunteerErrors['email'])): ?>
-                                <div class="invalid-feedback"><?php echo $volunteerErrors['email']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <input type="text" name="volunteer-subject" id="volunteer-subject"
-                                    class="form-control <?php echo isset($volunteerErrors['subject']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Subject" required
-                                    value="<?php echo $volunteerData['subject']; ?>">
-                                <?php if (isset($volunteerErrors['subject'])): ?>
-                                <div class="invalid-feedback"><?php echo $volunteerErrors['subject']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <div class="input-group input-group-file">
-                                    <input type="file" class="form-control" id="inputGroupFile02" name="cv">
-                                    <label class="input-group-text" for="inputGroupFile02">Upload your CV</label>
-                                    <i class="bi-cloud-arrow-up ms-auto"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <textarea name="volunteer-message" rows="3" class="form-control" id="volunteer-message"
-                            placeholder="Comment (Optional)"><?php echo $volunteerData['message']; ?></textarea>
-
-                        <button type="submit" class="form-control">Submit</button>
-                    </form>
-                </div>
-
-                <div class="col-lg-6 col-12">
-                    <img src="images/smiling-casual-woman-dressed-volunteer-t-shirt-with-badge.jpg"
-                        class="volunteer-image img-fluid" alt="">
-                    <div class="custom-block-body text-center">
-                        <h4 class="text-white mt-lg-3 mb-lg-3">About Relawan</h4>
-                        <p class="text-white">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm
-                            tokito Professional charity theme based</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<?php include 'includes/footer.php'; ?>

@@ -758,10 +758,10 @@ strong {
 
 
 /*---------------------------------------
-  DONATE              
+  GABUNG RELAWAN            
 -----------------------------------------*/
-.donate-section {
-  background-image: url('../images/different-people-doing-volunteer-work.jpg');
+.gabung-section {
+  background-image: url('../images/gabung.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -770,7 +770,7 @@ strong {
   padding-bottom: 150px;
 }
 
-.donate-form {
+.gabung-form {
   background: var(--white-color);
   border-radius: var(--border-radius-medium);
   position: relative;
@@ -778,6 +778,23 @@ strong {
   padding: 50px;
 }
 
+.btn-check {
+  display: none;
+}
+
+.custom-btn {
+  background: #dce3ea;
+  padding: 15px;
+  border-radius: 6px;
+  display: block;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-check:checked + .custom-btn {
+  background: #5f7485;
+  color: white;
+}
 
 /*---------------------------------------
   NEWS         
