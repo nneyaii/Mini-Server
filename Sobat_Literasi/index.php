@@ -143,7 +143,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     <h2 class="mb-0">Gerakan Literasi untuk<br> Generasi Cerdas</h2>
                 </div>
                 <div class="col-lg-5 col-12">
-                    <a href="materi.php" class="me-4">Lihat Materi</a>
                     <a href="relawan.php" class="custom-btn btn smoothscroll">Menjadi Relawan</a>
                 </div>
             </div>

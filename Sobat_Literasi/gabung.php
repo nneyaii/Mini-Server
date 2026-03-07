@@ -59,14 +59,22 @@ include 'includes/head.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-12 mx-auto">
+                <?php
+                $donateSuccess = false;
 
-                    <?php if ($donateSuccess): ?>
-                    <div class="alert alert-success text-center p-4">
-                        <h4>🎉 Terima kasih atas ketersediaan Anda!</h4>
-                        <p>Respon Anda sangat berarti bagi kami. Kami akan segera memproses permintaan Anda.</p>
-                        <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
-                    </div>
-                    <?php else: ?>
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // simpan data
+                    $donateSuccess = true;
+                }
+                ?>
+
+                <?php if ($donateSuccess): ?>
+                <div class="alert alert-success text-center p-4">
+                    <h4>🎉 Terima kasih atas ketersediaan Anda!</h4>
+                    <p>Respon Anda sangat berarti bagi kami. Kami akan segera memproses permintaan Anda.</p>
+                    <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
+                </div>
+                <?php else: ?>
 
                     <form class="custom-form gabung-form" action="gabung.php" method="post" role="form">
                         <h3 class="mb-4">Pendaftaran Relawan</h3>
@@ -137,21 +145,21 @@ include 'includes/head.php';
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="status" id="pelajar" value="pelajar">
                                     <label class="form-check-label" for="pelajar">
-                                    <i class="bi bi-mortarboard custom-icon ms-1"></i> Pelajar
+                                    <i class="bi bi-mortarboard custom-icon ms-1"> </i>Pelajar
                                     </label>
                                     </div>
 
                                     <div class="form-check">
                                     <input class="form-check-input" type="radio" name="status" id="guru" value="guru">
                                     <label class="form-check-label" for="guru">
-                                    <i class="bi bi-easel custom-icon ms-1"></i> Guru
+                                    <i class="bi bi-easel custom-icon ms-1"> </i>Guru
                                     </label>
                                     </div>
 
                                     <div class="form-check">
                                     <input class="form-check-input" type="radio" name="status" id="umum" value="umum">
                                     <label class="form-check-label" for="umum">
-                                    <i class="bi bi-people custom-icon ms-1"></i> Umum
+                                    <i class="bi bi-people custom-icon ms-1"> </i>Umum
                                     </label>
                                     </div>
 

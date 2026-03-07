@@ -1132,29 +1132,6 @@ blockquote::before {
   margin-bottom: 20px;
 }
 
-.donate-form .form-check-group-donation-frequency {
-  padding-right: 0;
-}
-
-.form-check-group-donation-frequency + .form-check-group-donation-frequency {
-  padding-right: 12px;
-  padding-left: 0;
-}
-
-.form-check-group-donation-frequency .form-check-label {
-  font-weight: var(--font-weight-semibold);
-}
-
-#DonationFrequencyOne {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-#DonationFrequencyMonthly {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
 .custom-form .form-check-radio {
   position: relative;
   height: 100%;
