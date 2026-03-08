@@ -17,14 +17,17 @@ include 'includes/head.php';
                 <div class="col-lg-5 col-12 mb-5">
                     <h2 class="text-white">Program Relawan <br> Sobat Literasi</h2>
                     <div class="d-flex align-items-center mt-5">
-                        <a href="#topics-detail" class="btn custom-btn custom-border-btn smoothscroll me-4">Read More</a>
-                        <a href="#top" class="custom-icon bi-bookmark smoothscroll"></a>
+                    
+                    <div class="col-lg-5 col-12">
+                    <a href="gabung.php" class="custom-btn btn smoothscroll">Daftar Relawan</a>
+                    </div>
+                    
                     </div>
                 </div>
 
                 <div class="col-lg-5 col-12">
                     <div class="topics-detail-block bg-white shadow-lg">
-                        <img src="images/topics/undraw_Remote_design_team_re_urdx.png"
+                        <img src="images/topics/9.png"
                             class="topics-detail-block-image img-fluid">
                     </div>
                 </div>
@@ -50,11 +53,11 @@ include 'includes/head.php';
 
                     <div class="row my-4">
                         <div class="col-lg-6 col-md-6 col-12">
-                            <img src="images/businesswoman-using-tablet-analysis.jpg"
+                            <img src="images/topics/10.png"
                                 class="topics-detail-block-image img-fluid">
                         </div>
                         <div class="col-lg-6 col-md-6 col-12 mt-4 mt-lg-0 mt-md-0">
-                            <img src="images/colleagues-working-cozy-office-medium-shot.jpg"
+                            <img src="images/topics/8.png"
                                 class="topics-detail-block-image img-fluid">
                         </div>
                     </div>
@@ -90,9 +93,9 @@ include 'includes/head.php';
                         <li>Tidak mengandung unsur SARA, kekerasan, atau konten yang tidak pantas.</li>
                         <li>Materi merupakan karya asli atau mencantumkan sumber referensi yang digunakan.</li>
                         <li>Materi dapat berupa artikel, rangkuman pelajaran, modul pembelajaran, atau file PDF.</li>
-                       
+                    
                     </ul>
-                     Tim Sobat Literasi berhak melakukan penyuntingan sebelum materi dipublikasikan.
+                    Tim Sobat Literasi berhak melakukan penyuntingan sebelum materi dipublikasikan.
                 </div>
             </div>
         </div>
@@ -132,13 +135,6 @@ include 'includes/head.php';
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-12 text-center mt-5">
-                    <p class="text-white">
-                        Want to learn more?
-                        <a href="#" class="btn custom-btn custom-border-btn ms-3">Check out Youtube</a>
-                    </p>
-                </div>
             </div>
         </div>
     </section>
@@ -146,7 +142,7 @@ include 'includes/head.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-12">
-                    <h2 class="mb-4">Frequently Asked Questions</h2>
+                    <h3 class="mb-4">Pertanyaan Seputar Relawan</h3>
                 </div>
 
                 <div class="clearfix"></div>
@@ -159,9 +155,9 @@ include 'includes/head.php';
                     <div class="accordion" id="accordionExample">
                         <?php
                         $faqs = [
-                            ['id' => 'One',   'question' => 'What is Topic Listing?',  'answer' => 'Topic Listing is free Bootstrap 5 CSS template. <strong>You are not allowed to redistribute this template</strong> on any other template collection website without our permission. Please contact TemplateMo for more detail. Thank you.', 'open' => true],
-                            ['id' => 'Two',   'question' => 'How to find a topic?',    'answer' => 'You can search on Google with <strong>keywords</strong> such as templatemo portfolio, templatemo one-page layouts, photography, digital marketing, etc.', 'open' => false],
-                            ['id' => 'Three', 'question' => 'Does it need to paid?',   'answer' => 'You can modify any of this with custom CSS or overriding our default variables. It\'s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.', 'open' => false],
+                            ['id' => 'One',   'question' => 'Siapa saja yang bisa menjadi relawan?',  'answer' => 'Siapa saja dapat menjadi relawan selama memiliki minat untuk berbagi ilmu, membuat materi pembelajaran, dan bersedia mengikuti ketentuan yang berlaku di website Sobat Literasi.', 'open' => true],
+                            ['id' => 'Two',   'question' => 'Apakah menjadi relawan dikenakan biaya?',    'answer' => 'Tidak. Bergabung sebagai relawan di Sobat Literasi sepenuhnya gratis karena program ini bertujuan untuk berbagi ilmu dan mendukung kegiatan literasi.', 'open' => false],
+                            ['id' => 'Three', 'question' => 'Apakah materi yang dikirim akan langsung dipublikasikan?',   'answer' => 'Tidak selalu. Materi yang dikirimkan akan melalui proses peninjauan oleh tim terlebih dahulu untuk memastikan kualitas dan kesesuaian dengan ketentuan website.', 'open' => false],
                         ];
                         foreach ($faqs as $faq):
                         ?>

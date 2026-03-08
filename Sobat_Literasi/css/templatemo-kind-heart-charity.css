@@ -174,10 +174,6 @@ strong {
 /*---------------------------------------
   SECTION               
 -----------------------------------------*/
-
-/*---------------------------------------
-  SECTION               
------------------------------------------*/
 .section-padding {
   padding-top: 100px;
   padding-bottom: 100px;
@@ -188,7 +184,7 @@ strong {
 }
 
 .section-overlay {
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background-image: linear-gradient(15deg, #4c7891 0%, #80d0c7 100%);
   position: absolute;
   top: 0;
   left: 0;
@@ -197,6 +193,17 @@ strong {
   height: 100%;
   opacity: 0.85;
 }
+
+.section-overlay1 {
+  background: rgba(0, 0, 0, 0.35);
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
 
 .section-overlay + .container {
   position: relative;
@@ -385,7 +392,6 @@ strong {
   border-color: transparent;
   color: var(--white-color);
 }
-
 
 /*---------------------------------------
   NAVIGATION              
@@ -818,21 +824,8 @@ strong {
   padding: 50px;
 }
 
-.btn-check {
-  display: none;
-}
-
-.custom-btn {
-  background: #dce3ea;
-  padding: 15px;
-  border-radius: 6px;
-  display: block;
-  cursor: pointer;
-  font-weight: 500;
-}
-
 .btn-check:checked + .custom-btn {
-  background: #5f7485;
+  background: #77d5c7;
   color: white;
 }
 
@@ -840,7 +833,7 @@ strong {
   TIMELINE              
 -----------------------------------------*/
 .timeline-section {
-  background-image: url('../images/colleagues-working-cozy-office-medium-shot.jpg');
+  background-image: url('../images/1.jpeg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

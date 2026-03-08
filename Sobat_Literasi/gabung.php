@@ -55,7 +55,7 @@ include 'includes/head.php';
 
 <main>
     <section class="gabung-section">
-        <div class="section-overlay"></div>
+        <div class="section-overlay1"></div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-12 mx-auto">
@@ -105,7 +105,6 @@ include 'includes/head.php';
                             </div>
 
 
-                            <!-- Pernah Jadi Relawan -->
                             <!-- Pernah Jadi Relawan -->
                             <div class="col-lg-12 col-12">
                                 <h5 class="mt-1">Pernah Jadi Relawan?</h5>
