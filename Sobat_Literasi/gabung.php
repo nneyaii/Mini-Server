@@ -2,10 +2,29 @@
 $pageTitle  = 'Sobat Literasi';
 $activePage = 'gabung';
 
-// Handle form donasi
+// Handle form relawan
 $donateSuccess = false;
 $donateErrors  = [];
 $donateData    = ['name' => '', 'email' => '', 'frequency' => 'one-time', 'amount' => '', 'custom_amount' => '', 'payment' => ''];
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['volunteer-name'])) {
+    $volunteerData['name']    = htmlspecialchars(trim($_POST['volunteer-name'] ?? ''));
+    $volunteerData['email']   = htmlspecialchars(trim($_POST['volunteer-email'] ?? ''));
+    $volunteerData['subject'] = htmlspecialchars(trim($_POST['volunteer-subject'] ?? ''));
+    $volunteerData['message'] = htmlspecialchars(trim($_POST['volunteer-message'] ?? ''));
+
+    if (empty($volunteerData['name']))    $volunteerErrors['name']    = 'Nama wajib diisi.';
+    if (empty($volunteerData['email']) || !filter_var($_POST['volunteer-email'], FILTER_VALIDATE_EMAIL))
+                                    $volunteerErrors['email']   = 'Email tidak valid.';
+    if (empty($volunteerData['subject'])) $volunteerErrors['subject'] = 'Subject wajib diisi.';
+
+    if (empty($volunteerErrors)) {
+        // Proses simpan/kirim email di sini
+        $volunteerSuccess = true;
+        $volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $donateData['name']          = htmlspecialchars(trim($_POST['donation-name'] ?? ''));
@@ -35,83 +54,35 @@ include 'includes/head.php';
 <?php include 'includes/navbar.php'; ?>
 
 <main>
-    <section class="donate-section">
-        <div class="section-overlay"></div>
+    <section class="gabung-section">
+        <div class="section-overlay1"></div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-12 mx-auto">
+                <?php
+                $donateSuccess = false;
 
-                    <?php if ($donateSuccess): ?>
-                    <div class="alert alert-success text-center p-4">
-                        <h4>🎉 Terima kasih atas donasi Anda!</h4>
-                        <p>Donasi Anda sangat berarti bagi kami. Kami akan segera memproses pembayaran Anda.</p>
-                        <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
-                    </div>
-                    <?php else: ?>
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // simpan data
+                    $donateSuccess = true;
+                }
+                ?>
 
-                    <form class="custom-form donate-form" action="donate.php" method="post" role="form">
-                        <h3 class="mb-4">Make a donation</h3>
+                <?php if ($donateSuccess): ?>
+                <div class="alert alert-success text-center p-4">
+                    <h4>🎉 Terima kasih atas ketersediaan Anda!</h4>
+                    <p>Respon Anda sangat berarti bagi kami. Kami akan segera memproses permintaan Anda.</p>
+                    <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
+                </div>
+                <?php else: ?>
+
+                    <form class="custom-form gabung-form" action="gabung.php" method="post" role="form">
+                        <h3 class="mb-4">Pendaftaran Relawan</h3>
 
                         <div class="row">
-                            <!-- Donation Frequency -->
+                    <!-- Personal Info -->
                             <div class="col-lg-12 col-12">
-                                <h5 class="mb-3">Donation Frequency</h5>
-                            </div>
-                            <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
-                                <div class="form-check form-check-radio">
-                                    <input class="form-check-input" type="radio" name="DonationFrequency"
-                                        id="DonationFrequencyOne" value="one-time"
-                                        <?php echo ($donateData['frequency'] !== 'monthly') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="DonationFrequencyOne">One Time</label>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
-                                <div class="form-check form-check-radio">
-                                    <input class="form-check-input" type="radio" name="DonationFrequency"
-                                        id="DonationFrequencyMonthly" value="monthly"
-                                        <?php echo ($donateData['frequency'] === 'monthly') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="DonationFrequencyMonthly">Monthly</label>
-                                </div>
-                            </div>
-
-                            <!-- Select Amount -->
-                            <div class="col-lg-12 col-12">
-                                <h5 class="mt-2 mb-3">Select an amount</h5>
-                                <?php if (isset($donateErrors['amount'])): ?>
-                                <div class="text-danger small mb-2"><?php echo $donateErrors['amount']; ?></div>
-                                <?php endif; ?>
-                            </div>
-
-                            <?php
-                            $amounts = [10, 15, 20, 30, 45, 50];
-                            foreach ($amounts as $i => $amount):
-                                $radioId = 'flexRadioDefault' . ($i + 1);
-                            ?>
-                            <div class="col-lg-3 col-md-6 col-6 form-check-group">
-                                <div class="form-check form-check-radio">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="<?php echo $radioId; ?>" value="<?php echo $amount; ?>"
-                                        <?php echo ($donateData['amount'] == $amount) ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="<?php echo $radioId; ?>">
-                                        $<?php echo $amount; ?>
-                                    </label>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-
-                            <div class="col-lg-6 col-12 form-check-group">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">$</span>
-                                    <input type="text" name="custom-amount" class="form-control"
-                                        placeholder="Custom amount"
-                                        value="<?php echo $donateData['custom_amount']; ?>"
-                                        aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-
-                            <!-- Personal Info -->
-                            <div class="col-lg-12 col-12">
-                                <h5 class="mt-1">Personal Info</h5>
+                                <h5 class="mt-1">Data Diri</h5>
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
                                 <input type="text" name="donation-name" id="donation-name"
@@ -133,32 +104,80 @@ include 'includes/head.php';
                                 <?php endif; ?>
                             </div>
 
-                            <!-- Payment -->
+
+                            <!-- Pernah Jadi Relawan -->
                             <div class="col-lg-12 col-12">
-                                <h5 class="mt-4 pt-1">Choose Payment</h5>
+                                <h5 class="mt-1">Pernah Jadi Relawan?</h5>
+                            </div>
+
+                            <div class="col-lg-6 col-6 form-check-group">
+                                <input type="radio" class="btn-check" name="pengalaman_relawan" id="relawanYa" value="ya" autocomplete="off">
+                                <label class="custom-btn w-100 text-center" for="relawanYa">Ya</label>
+                            </div>
+
+                            <div class="col-lg-6 col-6 form-check-group">
+                                <input type="radio" class="btn-check" name="pengalaman_relawan" id="relawanTidak" value="tidak" autocomplete="off">
+                                <label class="custom-btn w-100 text-center" for="relawanTidak">Tidak</label>
+                            </div>
+
+                            <!-- Alasan Menjadi Relawan -->
+                            <div class="col-lg-12 col-12">
+                                <h5 class="mt-1">Alasan Ingin Menjadi Relawan</h5>
+                            </div>
+
+                            <div class="col-lg-12 col-12 mt-1">
+                                <textarea 
+                                    class="form-control" 
+                                    name="alasan_relawan" 
+                                    rows="4" 
+                                    placeholder="Tuliskan alasan Anda ingin bergabung sebagai relawan..."
+                                    required></textarea>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-lg-12 col-12">
+                                <h5 class="mt-1 pt-1">Pilih Status </h5>
                                 <?php if (isset($donateErrors['payment'])): ?>
                                 <div class="text-danger small mb-2"><?php echo $donateErrors['payment']; ?></div>
                                 <?php endif; ?>
                             </div>
-                            <div class="col-lg-12 col-12 mt-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="DonationPayment"
-                                        id="flexRadioDefault9" value="card"
-                                        <?php echo ($donateData['payment'] === 'card') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="flexRadioDefault9">
-                                        <i class="bi-credit-card custom-icon ms-1"></i> Debit or Credit card
+                                    <input class="form-check-input" type="radio" name="status" id="pelajar" value="pelajar">
+                                    <label class="form-check-label" for="pelajar">
+                                    <i class="bi bi-mortarboard custom-icon ms-1"> </i>Pelajar
                                     </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="DonationPayment"
-                                        id="flexRadioDefault10" value="paypal"
-                                        <?php echo ($donateData['payment'] === 'paypal') ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="flexRadioDefault10">
-                                        <i class="bi-paypal custom-icon ms-1"></i> Paypal
-                                    </label>
-                                </div>
+                                    </div>
 
-                                <button type="submit" class="form-control mt-4">Submit Donation</button>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="guru" value="guru">
+                                    <label class="form-check-label" for="guru">
+                                    <i class="bi bi-easel custom-icon ms-1"> </i>Guru
+                                    </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="umum" value="umum">
+                                    <label class="form-check-label" for="umum">
+                                    <i class="bi bi-people custom-icon ms-1"> </i>Umum
+                                    </label>
+                                    </div>
+
+                                <!-- Persetujuan -->
+                                <div class="col-lg-12 col-12">
+                                    <div class="form-check mt-4">
+                                        <input 
+                                            class="form-check-input" 
+                                            type="checkbox" 
+                                            id="persetujuanRelawan" 
+                                            name="persetujuan_relawan" 
+                                            required>
+                                            
+                                        <label class="form-check-label" for="persetujuanRelawan">
+                                            Saya bersedia berpartisipasi dalam kegiatan relawan dan mengikuti aturan yang berlaku.
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="form-control mt-4">Kirim Pendaftaran</button>
                             </div>
                         </div>
                     </form>
@@ -169,5 +188,3 @@ include 'includes/head.php';
         </div>
     </section>
 </main>
-
-<?php include 'includes/footer.php'; ?>

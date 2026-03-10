@@ -24,7 +24,7 @@
                 </p>
                 <p class="text-white d-flex">
                     <i class="bi-envelope me-2"></i>
-                    <a href="mailto:solit@gmail.com" class="site-footer-link">donate@charity.org</a>
+                    <a href="mailto:solit@gmail.com" class="site-footer-link">admin@solit.org</a>
                 </p>
                 <p class="text-white d-flex mt-3">
                     <i class="bi-geo-alt me-2"></i>

@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'Topic Detail Page';
-$pageDescription = 'Introduction to Web Design 101';
+$pageDescription = 'Materi Pembelajaran';
 $activePage = '';
 
 include 'includes/head.php';
@@ -21,7 +21,7 @@ include 'includes/head.php';
                             <li class="breadcrumb-item active" aria-current="page">Web Design</li>
                         </ol>
                     </nav>
-                    <h2 class="text-white">Introduction to <br> Web Design 101</h2>
+                    <h2 class="text-white">Materi<br> Pembelajaran </h2>
                     <div class="d-flex align-items-center mt-5">
                         <a href="#topics-detail" class="btn custom-btn custom-border-btn smoothscroll me-4">Read More</a>
                         <a href="#top" class="custom-icon bi-bookmark smoothscroll"></a>
