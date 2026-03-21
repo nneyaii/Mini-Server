@@ -1,52 +1,50 @@
+
 <?php
+$conn = mysqli_connect("localhost", "root", "", "sobat_literasi");
+
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
 $pageTitle  = 'Sobat Literasi';
 $activePage = 'gabung';
 
-// Handle form relawan
-$donateSuccess = false;
-$donateErrors  = [];
-$donateData    = ['name' => '', 'email' => '', 'frequency' => 'one-time', 'amount' => '', 'custom_amount' => '', 'payment' => ''];
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['volunteer-name'])) {
-    $volunteerData['name']    = htmlspecialchars(trim($_POST['volunteer-name'] ?? ''));
-    $volunteerData['email']   = htmlspecialchars(trim($_POST['volunteer-email'] ?? ''));
-    $volunteerData['subject'] = htmlspecialchars(trim($_POST['volunteer-subject'] ?? ''));
-    $volunteerData['message'] = htmlspecialchars(trim($_POST['volunteer-message'] ?? ''));
-
-    if (empty($volunteerData['name']))    $volunteerErrors['name']    = 'Nama wajib diisi.';
-    if (empty($volunteerData['email']) || !filter_var($_POST['volunteer-email'], FILTER_VALIDATE_EMAIL))
-                                    $volunteerErrors['email']   = 'Email tidak valid.';
-    if (empty($volunteerData['subject'])) $volunteerErrors['subject'] = 'Subject wajib diisi.';
-
-    if (empty($volunteerErrors)) {
-        // Proses simpan/kirim email di sini
-        $volunteerSuccess = true;
-        $volunteerData    = ['name' => '', 'email' => '', 'subject' => '', 'message' => ''];
-    }
-}
+$gabungSuccess = false;
+$gabungErrors  = [];
+$gabungData    = ['nama' => '', 'email' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $donateData['name']          = htmlspecialchars(trim($_POST['donation-name'] ?? ''));
-    $donateData['email']         = htmlspecialchars(trim($_POST['donation-email'] ?? ''));
-    $donateData['frequency']     = htmlspecialchars($_POST['DonationFrequency'] ?? '');
-    $donateData['amount']        = htmlspecialchars($_POST['flexRadioDefault'] ?? '');
-    $donateData['custom_amount'] = htmlspecialchars(trim($_POST['custom-amount'] ?? ''));
-    $donateData['payment']       = htmlspecialchars($_POST['DonationPayment'] ?? '');
 
-    if (empty($donateData['name']))  $donateErrors['name']  = 'Nama wajib diisi.';
-    if (empty($donateData['email']) || !filter_var($_POST['donation-email'], FILTER_VALIDATE_EMAIL))
-                                     $donateErrors['email'] = 'Email tidak valid.';
-    if (empty($donateData['amount']) && empty($donateData['custom_amount']))
-                                     $donateErrors['amount'] = 'Pilih atau masukkan nominal donasi.';
-    if (empty($donateData['payment'])) $donateErrors['payment'] = 'Pilih metode pembayaran.';
+    $gabungData['nama']  = htmlspecialchars(trim($_POST['nama'] ?? ''));
+    $gabungData['email'] = htmlspecialchars(trim($_POST['email'] ?? ''));
 
-    if (empty($donateErrors)) {
-        // Proses donasi di sini (integrasi payment gateway, dll)
-        $donateSuccess = true;
+    $pernah = $_POST['pengalaman_relawan'] ?? '';
+    $alasan = htmlspecialchars(trim($_POST['alasan_relawan'] ?? ''));
+    $status = $_POST['status'] ?? '';
+    $setuju = isset($_POST['persetujuan_relawan']) ? 1 : 0;
+
+    // validasi ringan (biar UI tetap clean)
+    if (empty($gabungData['nama'])) {
+        $gabungErrors['nama'] = true;
+    }
+
+    if (empty($gabungData['email']) || !filter_var($gabungData['email'], FILTER_VALIDATE_EMAIL)) {
+        $gabungErrors['email'] = true;
+    }
+
+    // simpan
+    if (empty($gabungErrors)) {
+
+        if ($conn) {
+            mysqli_query($conn, "INSERT INTO gabung 
+            (nama, email, pernah_relawan, alasan, kategori, persetujuan) 
+            VALUES 
+            ('{$gabungData['nama']}', '{$gabungData['email']}', '$pernah', '$alasan', '$status', '$setuju')");
+        }
+
+        $gabungSuccess = true;
     }
 }
-
 include 'includes/head.php';
 ?>
 
@@ -60,21 +58,21 @@ include 'includes/head.php';
             <div class="row">
                 <div class="col-lg-6 col-12 mx-auto">
                 <?php
-                $donateSuccess = false;
+                $gabungSuccess = false;
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // simpan data
-                    $donateSuccess = true;
+                    $gabungSuccess = true;
                 }
                 ?>
 
-                <?php if ($donateSuccess): ?>
-                <div class="alert alert-success text-center p-4">
-                    <h4>🎉 Terima kasih atas ketersediaan Anda!</h4>
-                    <p>Respon Anda sangat berarti bagi kami. Kami akan segera memproses permintaan Anda.</p>
-                    <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
-                </div>
-                <?php else: ?>
+            <?php if ($gabungSuccess): ?>
+            <div class="alert alert-success text-center p-4">
+                <h4>🎉 Terima kasih atas ketersediaan Anda!</h4>
+                <p>Respon Anda sangat berarti bagi kami. Kami akan segera memproses permintaan Anda.</p>
+                <a href="index.php" class="custom-btn btn">Kembali ke Beranda</a>
+            </div>
+            <?php else: ?>
 
                     <form class="custom-form gabung-form" action="gabung.php" method="post" role="form">
                         <h3 class="mb-4">Pendaftaran Relawan</h3>
@@ -85,22 +83,22 @@ include 'includes/head.php';
                                 <h5 class="mt-1">Data Diri</h5>
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
-                                <input type="text" name="donation-name" id="donation-name"
-                                    class="form-control <?php echo isset($donateErrors['name']) ? 'is-invalid' : ''; ?>"
+                                <input type="text" name="nama" id="nama"
+                                    class="form-control <?php echo isset($gabungErrors['nama']) ? 'is-invalid' : ''; ?>"
                                     placeholder="Jack Doe" required
-                                    value="<?php echo $donateData['name']; ?>">
-                                <?php if (isset($donateErrors['name'])): ?>
-                                <div class="invalid-feedback"><?php echo $donateErrors['name']; ?></div>
+                                    value="<?php echo $gabungData['nama']; ?>">
+                                <?php if (isset($gabungErrors['nama'])): ?>
+                                <div class="invalid-feedback"><?php echo $gabungErrors['nama']; ?></div>
                                 <?php endif; ?>
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
-                                <input type="email" name="donation-email" id="donation-email"
+                                <input type="email" name="email" id="email"
                                     pattern="[^ @]*@[^ @]*"
-                                    class="form-control <?php echo isset($donateErrors['email']) ? 'is-invalid' : ''; ?>"
+                                    class="form-control <?php echo isset($gabungErrors['email']) ? 'is-invalid' : ''; ?>"
                                     placeholder="Jackdoe@gmail.com" required
-                                    value="<?php echo $donateData['email']; ?>">
-                                <?php if (isset($donateErrors['email'])): ?>
-                                <div class="invalid-feedback"><?php echo $donateErrors['email']; ?></div>
+                                    value="<?php echo $gabungData['email']; ?>">
+                                <?php if (isset($gabungErrors['email'])): ?>
+                                <div class="invalid-feedback"><?php echo $gabungErrors['email']; ?></div>
                                 <?php endif; ?>
                             </div>
 
@@ -137,8 +135,8 @@ include 'includes/head.php';
                             <!-- Status -->
                             <div class="col-lg-12 col-12">
                                 <h5 class="mt-1 pt-1">Pilih Status </h5>
-                                <?php if (isset($donateErrors['payment'])): ?>
-                                <div class="text-danger small mb-2"><?php echo $donateErrors['payment']; ?></div>
+                                <?php if (isset($gabungErrors['payment'])): ?>
+                                <div class="text-danger small mb-2"><?php echo $gabungErrors['payment']; ?></div>
                                 <?php endif; ?>
                             </div>
                                 <div class="form-check">

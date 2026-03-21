@@ -1426,7 +1426,7 @@ blockquote::before {
   background: var(--white-color);
 }
 
-.donate-form .form-control {
+.gabung-form .form-control {
   margin-bottom: 0;
 }
 
@@ -1592,7 +1592,7 @@ blockquote::before {
     padding-bottom: 40px;
   }
 
-  .donate-form {
+  .gabung-form {
     padding: 35px;
   }
 
@@ -1807,7 +1807,7 @@ blockquote::before {
     margin-bottom: 10px;
   }
 
-  .donate-form {
+  .gabung-form {
     padding: 25px;
   }
 }
