@@ -52,13 +52,14 @@ include 'includes/head.php';?>
                         <strong>Sobat Literasi</strong> juga menjadi wadah bagi para relawan pendidikan untuk berbagi ilmu dan pengalaman, sehingga materi yang tersedia dapat terus berkembang dan memberikan manfaat bagi lebih banyak pelajar di Indonesia.
                     </p>
                 </div>
-                
+
             </div>
         </div>
     </section>
 
 <!-- DATA MATERI -->
 <?php
+
 $materi = [
     'kelas10' => [
         [   
@@ -142,6 +143,8 @@ $materi = [
 <!-- TAB KELAS -->
 <section class="section-padding">
 <div class="container">
+
+    <h3>Materi Pembelajaran</h3>
 
 <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
