@@ -3,42 +3,36 @@ $pageTitle = 'Halaman Materi';
 $pageDescription = 'Materi Pembelajaran';
 $activePage = '';
 
-include 'includes/head.php';?>
+include 'includes/head.php';
+?>
 
-<main>  
-    <?php include 'includes/navbar.php'; ?>
+<main> 
+<?php include 'includes/navbar.php'; ?>
 
+<header class="site-header d-flex flex-column justify-content-center align-items-center">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
 
-    <header class="site-header d-flex flex-column justify-content-center align-items-center">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-
-
-                <div class="col-lg-5 col-12 mb-5">
-                    <h2 class="text-white">Materi <br> Pembelajaran</h2>
-
-
-                </div>
-
-
-                <div class="col-lg-5 col-12">
-                    <div class="topics-detail-block bg-white shadow-lg">
-                        <img src="images/topics/9.png"
-                            class="topics-detail-block-image img-fluid">
-                    </div>
-                </div>
-
-
+            <div class="col-lg-5 col-12 mb-5">
+                <h2 class="text-white">Materi <br> Pembelajaran</h2>
             </div>
+
+            <div class="col-lg-5 col-12">
+                <div class="topics-detail-block bg-white shadow-lg">
+                    <img src="images/topics/9.png" class="img-fluid">
+                </div>
+            </div>
+
         </div>
-    </header>
+    </div>
+</header>
 
     <!-- PENGANTAR MATERI -->
     <section class="section-padding" id="pengantar">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-12 m-auto">
-                    <h3 class="mb-4 text">Pengantar Materi Pembelajaran</h3>
+                    <h3 class="mb-4 text">Pengantar</h3>
                     <p>
                         Materi pembelajaran pada website <strong>Sobat Literasi</strong> disusun untuk membantu siswa SMA memahami berbagai konsep pelajaran secara lebih mudah, sistematis, dan terstruktur. Setiap materi dirancang agar dapat dipelajari secara mandiri maupun sebagai pendukung pembelajaran di sekolah.
                     </p>
@@ -57,96 +51,72 @@ include 'includes/head.php';?>
         </div>
     </section>
 
-<!-- DATA MATERI -->
 <?php
-
 $materi = [
+
     'kelas10' => [
-        [   
-            'nama' => 'Pendidikan Agama Islam dan Budi Pekerti', 
-            'file' => 'materi/kelas10/agama_islam-kelas10.pdf',
-            'img'  => 'images/materi/kelas10-agama_islam.jpeg',
+        [
+            'nama'=>'Pendidikan Agama Islam dan Budi Pekerti',
+            'file'=>'materi/kelas10/agama_islam-kelas10.pdf',
+            'img'=>'images/materi/agama_islam-kelas10.png'
         ],
         [
-            'nama' => 'Pendidikan Agama Katolik dan Budi Pekerti', 
-            'file' => 'materi/kelas10/agama_katolik-kelas10.pdf',
-            'img'  => ''
+            'nama'=>'Pendidikan Agama Katolik dan Budi Pekerti',
+            'file'=>'materi/kelas10/agama_katolik-kelas10.pdf',
+            'img'=>'images/materi/agama_katolik-kelas10.png'
         ],
         [
-            'nama' => 'Pendidikan Agama Kristen dan Budi Pekerti', 
-            'file' => 'materi/kelas10/agama_kristen-kelas10.pdf',
-            'img'  => ''
+            'nama'=>'Pendidikan Agama Kristen dan Budi Pekerti',
+            'file'=>'materi/kelas10/agama_kristen-kelas10.pdf',
+            'img'=>'images/materi/agama_kristen-kelas10.png'
         ],
         [
-            'nama' => 'Bahasa Indonesia', 
-            'file' => 'materi/kelas10/bindo-kelas10.pdf',
-            'img'  => ''
+            'nama'=>'Bahasa Indonesia',
+            'file'=>'materi/kelas10/bindo-kelas10.pdf',
+            'img'=>'images/materi/bindo-kelas10.png'
         ],
         [
-            'nama' => 'Bahasa Inggris', 
-            'file' => 'materi/kelas10/bing-kelas10.pdf',
-            'img'  => ''
-        ],
-        [
-            'nama' => 'Matematika', 
-            'file' => 'materi/kelas10/mtk-kelas10.pdf',
-            'img'  => ''
-        ],
-        [
-            'nama' => 'IPA', 
-            'file' => 'materi/kelas10/ipa-kelas10.pdf',
-            'img'  => ''
-        ],
-        [
-            'nama' => 'IPS', 
-            'file' => 'materi/kelas10/ips-kelas10.pdf',
-            'img'  => ''
-        ],
-        [
-            'nama' => 'Sejarah', 
-            'file' => 'materi/kelas10/sejarah-kelas10.pdf',
+            'nama'=>'Matematika',
+            'file'=>'materi/kelas10/mtk-kelas10.pdf',
+            'img'=>'images/materi/mtk-kelas10.png'
         ],
     ],
+
     'kelas11' => [
         [
-            'nama' => 'Pendidikan Agama Islam dan Budi Pekerti', 
-            'file' => 'materi/kelas11/agama_islam-kelas11.pdf',
-            'img'  => 'images/materi/kelas11-agama_islam.jpeg'
+            'nama'=>'Fisika',
+            'file'=>'materi/kelas11/fisika-kelas11.pdf'
+            ,'img'=>'images/materi/fisika-kelas11.png'
         ],
-        ['nama' => 'Pendidikan Agama Katolik dan Budi Pekerti', 'file' => 'materi/kelas11/agama_katolik-kelas11.pdf'],
-        ['nama' => 'Pendidikan Agama Kristen dan Budi Pekerti', 'file' => 'materi/kelas11/agama_kristen-kelas11.pdf'],
-        ['nama' => 'Bahasa Indonesia', 'file' => 'materi/kelas11/bindo-kelas11.pdf'],
-        ['nama' => 'Bahasa Inggris', 'file' => 'materi/kelas11/bing-kelas11.pdf'],
-        ['nama' => 'Matematika', 'file' => 'materi/kelas11/mtk-kelas11.pdf'],
-        ['nama' => 'Matematika Tingkat Lanjut', 'file' => 'materi/kelas11/mtk_tingkat_lanjut-kelas11.pdf'],
-        ['nama' => 'Fisika', 'file' => 'materi/kelas11/fisika-kelas11.pdf'],
-        ['nama' => 'Biologi', 'file' => 'materi/kelas11/biologi-kelas11.pdf'],
-        ['nama' => 'Ekonomi', 'file' => 'materi/kelas11/ekonomi-kelas11.pdf'],
-        ['nama' => 'Pendidikan Pancasila dan Kewarganegaraan', 'file' => 'materi/kelas11/ppkn-kelas11.pdf'],
+        [
+            'nama'=>'Biologi',
+            'file'=>'materi/kelas11/biologi-kelas11.pdf',
+            'img'=>'images/materi/biologi-kelas11.png'
+        ],
     ],
+
     'kelas12' => [
-        ['nama' => 'Pendidikan Agama Islam dan Budi Pekerti', 'file' => 'materi/kelas12/agama_islam-kelas12.pdf'],
-        ['nama' => 'Pendidikan Agama Katolik dan Budi Pekerti', 'file' => 'materi/kelas12/agama_katolik-kelas12.pdf'],
-        ['nama' => 'Pendidikan Agama Kristen dan Budi Pekerti', 'file' => 'materi/kelas12/agama_kristen-kelas12.pdf'],
-        ['nama' => 'Bahasa Indonesia', 'file' => 'materi/kelas12/bindo-kelas12.pdf'],
-        ['nama' => 'Bahasa Inggris', 'file' => 'materi/kelas12/bing-kelas12.pdf'],
-        ['nama' => 'Matematika', 'file' => 'materi/kelas12/mtk-kelas12.pdf'],
-        ['nama' => 'Matematika Tingkat Lanjut', 'file' => 'materi/kelas12/mtk_tingkat_lanjut-kelas12.pdf'],
-        ['nama' => 'Fisika', 'file' => 'materi/kelas12/fisika-kelas12.pdf'],
-        ['nama' => 'Biologi', 'file' => 'materi/kelas12/biologi-kelas12.pdf'],
-        ['nama' => 'Ekonomi', 'file' => 'materi/kelas12/ekonomi-kelas12.pdf'],
-        ['nama' => 'Sosiologi', 'file' => 'materi/kelas12/sosiologi-kelas12.pdf'],
+        [
+            'nama'=>'Sosiologi',
+            'file'=>'materi/kelas12/sosiologi-kelas12.pdf',
+            'img'=>'images/materi/-kelas12.png'
+        ],
+        [
+            'nama'=>'Ekonomi',
+            'file'=>'materi/kelas12/ekonomi-kelas12.pdf',
+            'img'=>'images/materi/-kelas12.png'
+        ],
     ],
+
 ];
 ?>
 
-<!-- TAB KELAS -->
 <section class="section-padding">
 <div class="container">
 
-    <h3>Materi Pembelajaran</h3>
+<h2 class="text-center mb-4">Materi Pembelajaran</h2>
 
-<ul class="nav nav-tabs mb-4">
+<ul class="nav nav-tabs mb-4 justify-content-center">
     <li class="nav-item">
         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#kelas10">Kelas 10</button>
     </li>
@@ -160,79 +130,50 @@ $materi = [
 
 <div class="tab-content">
 
-    <!-- KELAS 10 -->
-    <div class="tab-pane fade show active" id="kelas10">
-        <div class="row">
-            <?php foreach ($materi['kelas10'] as $m): ?>
-            <div class="col-lg-4 mb-4">
-                <div class="card p-3 shadow materi-item"
-                     data-file="<?php echo $m['file']; ?>"
-                     data-nama="<?php echo $m['nama']; ?>">
+<?php foreach ($materi as $kelas => $list): ?>
+<div class="tab-pane fade <?php echo $kelas=='kelas10' ? 'show active':''; ?>" id="<?php echo $kelas; ?>">
+<div class="row">
 
-                    <h5><?php echo $m['nama']; ?></h5>
-                    <p>Klik untuk melihat materi</p>
+<?php foreach ($list as $m): ?>
+<div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
 
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
+<div class="custom-card w-100">
 
-    <!-- KELAS 11 -->
-    <div class="tab-pane fade" id="kelas11">
-        <div class="row">
-            <?php foreach ($materi['kelas11'] as $m): ?>
-            <div class="col-lg-4 mb-4">
-                <div class="card p-3 shadow materi-item"
-                     data-file="<?php echo $m['file']; ?>"
-                     data-nama="<?php echo $m['nama']; ?>">
+    <img src="<?php echo $m['img'] ?: 'images/default.png'; ?>" class="card-img">
 
-                    <h5><?php echo $m['nama']; ?></h5>
-                    <p>Klik untuk melihat materi</p>
+    <div class="card-body text-center">
 
-                </div>
+        <h5><?php echo $m['nama']; ?></h5>
 
+        <button class="lihat-btn"
+            data-file="<?php echo $m['file']; ?>"
+            data-nama="<?php echo $m['nama']; ?>">
+            Lihat Materi
+        </button>
 
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-
-    <!-- KELAS 12 -->
-    <div class="tab-pane fade" id="kelas12">
-        <div class="row">
-            <?php foreach ($materi['kelas12'] as $m): ?>
-            <div class="col-lg-4 mb-4">
-                <div class="card p-3 shadow materi-item"
-                     data-file="<?php echo $m['file']; ?>"
-                     data-nama="<?php echo $m['nama']; ?>">
-
-                    <h5><?php echo $m['nama']; ?></h5>
-                    <p>Klik untuk melihat materi</p>
-
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
     </div>
 
 </div>
 
+</div>
+<?php endforeach; ?>
+
+</div>
+</div>
+<?php endforeach; ?>
+
+</div>
 </div>
 </section>
 
-<!-- PREVIEW PDF -->
+<!-- PREVIEW -->
 <section class="section-padding">
 <div class="container">
 
-<div id="preview-box" style="display:none;">
+<div id="preview-box">
     <h3 id="judul-materi"></h3>
 
-    <iframe id="pdf-frame"
-            width="100%"
-            height="600px"
-            style="border-radius:10px; border:1px solid #ddd;">
-    </iframe>
+    <iframe id="pdf-frame"></iframe>
 
     <a id="download-btn" class="btn btn-primary mt-3" download>
         Download PDF
@@ -244,23 +185,109 @@ $materi = [
 
 <?php include 'includes/footer.php'; ?>
 
-<!-- JAVASCRIPT -->
-<script>
-document.querySelectorAll('.materi-item').forEach(item => {
-    item.addEventListener('click', function() {
+<!-- CSS -->
+<style>
+.custom-card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: #f8fbff;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+}
 
-        let file = this.getAttribute('data-file');
-        let nama = this.getAttribute('data-nama');
+.custom-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-body h5 {
+    min-height: 50px;
+}
+
+.lihat-btn {
+    margin-top: auto;
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: #5c6f7c;
+    color: white;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.lihat-btn:hover {
+    background: #4a5c68;
+}
+
+.lihat-btn:active {
+    transform: scale(0.97);
+}
+
+#preview-box {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+#pdf-frame {
+    width: 100%;
+    height: 600px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px){
+    .card-img {
+        height: 150px;
+    }
+
+    .lihat-btn {
+        font-size: 13px;
+        padding: 10px;
+    }
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+}
+</style>
+
+<!-- JS -->
+<script>
+document.querySelectorAll('.lihat-btn').forEach(btn => {
+    btn.addEventListener('click', function(){
+
+        let file = this.dataset.file;
+        let nama = this.dataset.nama;
+
+        this.classList.add('loading');
 
         document.getElementById('pdf-frame').src = file;
         document.getElementById('download-btn').href = file;
         document.getElementById('judul-materi').innerText = nama;
 
-        document.getElementById('preview-box').style.display = 'block';
+        let preview = document.getElementById('preview-box');
+        preview.style.display = 'block';
 
-        document.getElementById('preview-box').scrollIntoView({
-            behavior: 'smooth'
-        });
+        preview.scrollIntoView({behavior:'smooth'});
+
+        setTimeout(()=> this.classList.remove('loading'), 500);
     });
 });
 </script>
