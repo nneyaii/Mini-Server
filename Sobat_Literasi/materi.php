@@ -19,7 +19,7 @@ include 'includes/head.php';
 
             <div class="col-lg-5 col-12">
                 <div class="topics-detail-block bg-white shadow-lg">
-                    <img src="images/topics/9.png" class="img-fluid">
+                    <img src="images/slide/1.jpeg" class="img-fluid">
                 </div>
             </div>
 
