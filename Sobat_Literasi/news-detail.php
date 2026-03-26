@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment-message'])) {
 // Data komentar
 $comments = [
     ['name' => 'Budi',   'avatar' => 'images/avatar/studio-portrait-emotional-happy-funny.jpg',         'text' => 'Artikel ini membuka wawasan saya tentang pentingnya membangun budaya membaca sejak usia dini. Terima kasih sudah berbagi informasi yang bermanfaat.', 'indent' => false],
-    ['name' => 'Ami',  'avatar' => 'images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg',    'text' => 'Program seperti ini sangat dibutuhkan, terutama di daerah yang akses bukunya masih terbatas. Semoga kegiatannya terus berkembang.', 'indent' => true],
+    ['name' => 'Sary',  'avatar' => 'images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg',    'text' => 'Program seperti ini sangat dibutuhkan, terutama di daerah yang akses bukunya masih terbatas. Semoga kegiatannya terus berkembang.', 'indent' => true],
     ['name' => 'Adi', 'avatar' => 'images/avatar/portrait-young-redhead-bearded-male.jpg',          'text' => 'Terima kasih atas artikelnya. Sangat menginspirasi untuk ikut mendukung kegiatan pendidikan di masyarakat.', 'indent'=> false],
 ];
 
