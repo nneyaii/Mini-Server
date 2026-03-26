@@ -8,11 +8,11 @@
             <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <h5 class="site-footer-title mb-3">Menu Utama</h5>
                 <ul class="footer-menu">
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Beranda</a></li>
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Tentang Kami</a></li>
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Materi</a></li>
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Relawan</a></li>
-                    <li class="footer-menu-item"><a href="#" class="footer-menu-link">Kontak</a></li>
+                    <li class="footer-menu-item"><a href="index.php" class="footer-menu-link">Beranda</a></li>
+                    <li class="footer-menu-item"><a href="about.php" class="footer-menu-link">Tentang Kami</a></li>
+                    <li class="footer-menu-item"><a href="materi.php" class="footer-menu-link">Materi</a></li>
+                    <li class="footer-menu-item"><a href="relawan.php" class="footer-menu-link">Relawan</a></li>
+                    <li class="footer-menu-item"><a href="index.php#section_6" class="footer-menu-link">Kontak</a></li>
                 </ul>
             </div>
 
