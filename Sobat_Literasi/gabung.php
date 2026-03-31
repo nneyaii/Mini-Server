@@ -1,4 +1,3 @@
-
 <?php
 $conn = mysqli_connect("localhost", "root", "", "sobat_literasi");
 
@@ -51,6 +50,14 @@ include 'includes/head.php';
 <?php include 'includes/topbar.php'; ?>
 <?php include 'includes/navbar.php'; ?>
 
+<style>
+    #submitBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+    }
+</style>
+
 <main>
     <section class="gabung-section">
         <div class="section-overlay1"></div>
@@ -85,7 +92,7 @@ include 'includes/head.php';
                             <div class="col-lg-6 col-12 mt-2">
                                 <input type="text" name="nama" id="nama"
                                     class="form-control <?php echo isset($gabungErrors['nama']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jack Doe" required
+                                    placeholder="Nama" required
                                     value="<?php echo $gabungData['nama']; ?>">
                                 <?php if (isset($gabungErrors['nama'])): ?>
                                 <div class="invalid-feedback"><?php echo $gabungErrors['nama']; ?></div>
@@ -95,7 +102,7 @@ include 'includes/head.php';
                                 <input type="email" name="email" id="email"
                                     pattern="[^ @]*@[^ @]*"
                                     class="form-control <?php echo isset($gabungErrors['email']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jackdoe@gmail.com" required
+                                    placeholder="nama@gmail.com" required
                                     value="<?php echo $gabungData['email']; ?>">
                                 <?php if (isset($gabungErrors['email'])): ?>
                                 <div class="invalid-feedback"><?php echo $gabungErrors['email']; ?></div>
@@ -175,9 +182,33 @@ include 'includes/head.php';
                                         </label>
                                     </div>
                                 </div>
-                                <button type="submit" class="form-control mt-4">Kirim Pendaftaran</button>
+                                <button type="submit" id="submitBtn" class="form-control mt-4" disabled>Kirim Pendaftaran</button>
                             </div>
                         </div>
+                        <script>
+                            const form = document.querySelector('.gabung-form');
+                            const submitBtn = document.getElementById('submitBtn');
+
+                            function checkForm() {
+                                const nama = document.getElementById('nama').value.trim();
+                                const email = document.getElementById('email').value.trim();
+                                const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+                                const pengalaman = form.querySelector('input[name="pengalaman_relawan"]:checked');
+                                const alasan = form.querySelector('textarea[name="alasan_relawan"]').value.trim();
+                                const status = form.querySelector('input[name="status"]:checked');
+                                const persetujuan = document.getElementById('persetujuanRelawan').checked;
+
+                                const allFilled = nama && emailValid && pengalaman && alasan && status && persetujuan;
+
+                                submitBtn.disabled = !allFilled;
+                            }
+
+                            form.querySelectorAll('input, textarea').forEach(el => {
+                                el.addEventListener('input', checkForm);
+                                el.addEventListener('change', checkForm);
+                            });
+                        </script>
                     </form>
 
                     <?php endif; ?>
