@@ -209,7 +209,7 @@ include 'includes/head.php';
                                 el.addEventListener('change', checkForm);
                             });
                         </script>
-                    </form>
+                        </form>
 
                     <?php endif; ?>
                 </div>
