@@ -3,7 +3,7 @@ session_start();
 require_once 'config.php';
 requireLogin();
 
-$uploadDir = __DIR__ . '/../../uploads/';
+$uploadDir = __DIR__ . '/../uploads/';
 if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
 $errors   = [];
@@ -27,58 +27,52 @@ if (isset($_GET['delete']) && isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
 
 // UPLOAD MATERI
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $kelas     = trim($_POST['kelas'] ?? '');
+    $kelas = trim($_POST['kelas'] ?? '');
     $nama  = trim($_POST['nama'] ?? '');
-    $file = $_FILES['file'] ?? null;
-    $img      = $_FILES['img'] ?? null;
+    $file  = $_FILES['file'] ?? null;
+    $img   = $_FILES['img'] ?? null;
 
+    $errors = [];
     $imgName = null;
-    if ($img && $img['error'] === UPLOAD_ERR_OK) {
-        $ext = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
-        $allowed = ['jpg','jpeg','png','webp'];
 
+    // Validasi input teks
+    if (empty($kelas)) $errors[] = 'Kelas wajib diisi';
+    if (empty($nama))  $errors[] = 'Nama wajib diisi';
+
+    // Validasi & proses thumbnail
+    if ($img && $img['error'] === UPLOAD_ERR_OK) {
+        $ext     = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','webp'];
         if (in_array($ext, $allowed)) {
             $imgName = 'img_' . time() . '_' . uniqid() . '.' . $ext;
             move_uploaded_file($img['tmp_name'], $uploadDir . $imgName);
+        } else {
+            $errors[] = 'Thumbnail harus berformat JPG/PNG/WEBP';
         }
     }
 
-    if (empty($kelas))    $errors[] = 'Kelas wajib diisi';
-    if (empty($nama)) $errors[] = 'Nama wajib diisi';
-    if (!$file || $file['error'] !== UPLOAD_ERR_OK) $errors[] = 'File PDF wajib diunggah';
-
-    if ($file && $file['error'] === UPLOAD_ERR_OK) {
+    // Validasi file PDF
+    if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
+        $errors[] = 'File PDF wajib diunggah';
+    } else {
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        if ($ext !== 'pdf') $errors[] = 'File harus berformat PDF';
+        if ($ext !== 'pdf')                    $errors[] = 'File harus berformat PDF';
         if ($file['size'] > 20 * 1024 * 1024) $errors[] = 'Ukuran file maksimal 20MB';
     }
-}
 
-if ($img && $img['error'] === UPLOAD_ERR_OK) {
-    $ext = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg','jpeg','png','webp'];
-
-    if (in_array($ext, $allowed)) {
-        $imgName = 'img_' . time() . '_' . uniqid() . '.' . $ext;
-        move_uploaded_file($img['tmp_name'], $uploadDir . $imgName);
-    } else {
-        $errors[] = 'Thumbnail harus gambar!';
-    }
-
-
+    // Simpan jika tidak ada error
     if (empty($errors)) {
         $newFileName = 'materi_' . time() . '_' . uniqid() . '.pdf';
-        $destPath    = $uploadDir . $newFileName;
         $fileSize    = formatFileSize($file['size']);
 
-        if (move_uploaded_file($file['tmp_name'], $destPath)) {
+        if (move_uploaded_file($file['tmp_name'], $uploadDir . $newFileName)) {
             $kelasEsc = $conn->real_escape_string($kelas);
-            $namaEsc   = $conn->real_escape_string($nama);
+            $namaEsc  = $conn->real_escape_string($nama);
             $sizeEsc  = $conn->real_escape_string($fileSize);
+            $imgEsc   = $conn->real_escape_string($imgName ?? '');
 
-$conn->query("INSERT INTO materi (nama, kelas, file, img, ukuran, created_at) 
-VALUES ('$namaEsc','$kelasEsc','$newFileName','$imgName','$sizeEsc', NOW())");
-
+            $conn->query("INSERT INTO materi (nama, kelas, file, img, ukuran, created_at) 
+                          VALUES ('$namaEsc','$kelasEsc','$newFileName','$imgEsc','$sizeEsc', NOW())");
             $success = 'Materi berhasil diunggah!';
         } else {
             $errors[] = 'Gagal menyimpan file. Periksa izin folder uploads.';
