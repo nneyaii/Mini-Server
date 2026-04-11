@@ -24,7 +24,7 @@ include 'includes/head.php';
     </h2>
 
     <p>
-        <strong>Sobat Literasi</strong>adalah platform volunteer pendidikan yang bergerak di bidang literasi dan pembelajaran untuk siswa SMA. Website ini menjadi wadah bagi relawan untuk berbagi ilmu, materi pembelajaran, serta artikel edukatif yang bermanfaat.
+        <strong>Sobat Literasi</strong> adalah platform volunteer pendidikan yang bergerak di bidang literasi dan pembelajaran untuk siswa SMA. Website ini menjadi wadah bagi relawan untuk berbagi ilmu, materi pembelajaran, serta artikel edukatif yang bermanfaat.
     </p>
 
     <p>
@@ -76,7 +76,7 @@ include 'includes/head.php';
     <div class="team-card">
         <img src="images/anggota/vinno.png" class="team-img">
         <h5>Vinno</h5>
-        <p>Leader</p>
+        <p>Leader - Server Administrator</p>
         <small>Memimpin dan mengatur tim.</small>
     </div>
 
