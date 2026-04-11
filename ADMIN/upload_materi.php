@@ -27,13 +27,24 @@ if (isset($_GET['delete']) && isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
 
 // UPLOAD MATERI
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $judul     = trim($_POST['judul'] ?? '');
-    $kategori  = trim($_POST['kategori'] ?? '');
-    $deskripsi = trim($_POST['deskripsi'] ?? '');
-    $file      = $_FILES['file'] ?? null;
+    $kelas     = trim($_POST['kelas'] ?? '');
+    $nama  = trim($_POST['nama'] ?? '');
+    $file = $_FILES['file'] ?? null;
+    $img      = $_FILES['img'] ?? null;
 
-    if (empty($judul))    $errors[] = 'Judul materi wajib diisi';
-    if (empty($kategori)) $errors[] = 'Kategori wajib dipilih';
+    $imgName = null;
+    if ($img && $img['error'] === UPLOAD_ERR_OK) {
+        $ext = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
+        $allowed = ['jpg','jpeg','png','webp'];
+
+        if (in_array($ext, $allowed)) {
+            $imgName = 'img_' . time() . '_' . uniqid() . '.' . $ext;
+            move_uploaded_file($img['tmp_name'], $uploadDir . $imgName);
+        }
+    }
+
+    if (empty($kelas))    $errors[] = 'Kelas wajib diisi';
+    if (empty($nama)) $errors[] = 'Nama wajib diisi';
     if (!$file || $file['error'] !== UPLOAD_ERR_OK) $errors[] = 'File PDF wajib diunggah';
 
     if ($file && $file['error'] === UPLOAD_ERR_OK) {
@@ -41,6 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($ext !== 'pdf') $errors[] = 'File harus berformat PDF';
         if ($file['size'] > 20 * 1024 * 1024) $errors[] = 'Ukuran file maksimal 20MB';
     }
+}
+
+if ($img && $img['error'] === UPLOAD_ERR_OK) {
+    $ext = strtolower(pathinfo($img['name'], PATHINFO_EXTENSION));
+    $allowed = ['jpg','jpeg','png','webp'];
+
+    if (in_array($ext, $allowed)) {
+        $imgName = 'img_' . time() . '_' . uniqid() . '.' . $ext;
+        move_uploaded_file($img['tmp_name'], $uploadDir . $imgName);
+    } else {
+        $errors[] = 'Thumbnail harus gambar!';
+    }
+
 
     if (empty($errors)) {
         $newFileName = 'materi_' . time() . '_' . uniqid() . '.pdf';
@@ -48,13 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fileSize    = formatFileSize($file['size']);
 
         if (move_uploaded_file($file['tmp_name'], $destPath)) {
-            $adminId  = (int)$_SESSION['admin_id'];
-            $judulEsc = $conn->real_escape_string($judul);
-            $katEsc   = $conn->real_escape_string($kategori);
-            $descEsc  = $conn->real_escape_string($deskripsi);
+            $kelasEsc = $conn->real_escape_string($kelas);
+            $namaEsc   = $conn->real_escape_string($nama);
             $sizeEsc  = $conn->real_escape_string($fileSize);
 
-            $conn->query("INSERT INTO materi (judul, kategori, deskripsi, file, ukuran, admin_id) VALUES ('$judulEsc','$katEsc','$descEsc','$newFileName','$sizeEsc',$adminId)");
+$conn->query("INSERT INTO materi (nama, kelas, file, img, ukuran, created_at) 
+VALUES ('$namaEsc','$kelasEsc','$newFileName','$imgName','$sizeEsc', NOW())");
+
             $success = 'Materi berhasil diunggah!';
         } else {
             $errors[] = 'Gagal menyimpan file. Periksa izin folder uploads.';
@@ -62,8 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+
 // Fetch materi list
-$materiList = $conn->query("SELECT m.*, a.nama as admin_nama FROM materi m LEFT JOIN admin a ON m.admin_id=a.id ORDER BY m.created_at DESC")->fetch_all(MYSQLI_ASSOC);
+$materiList = $conn->query("
+    SELECT id, nama, kelas, file, img, created_at
+    FROM materi
+    ORDER BY created_at DESC
+")->fetch_all(MYSQLI_ASSOC);
 
 $pageTitle = 'Upload Materi';
 include 'partials/header.php';
@@ -101,25 +130,21 @@ include 'partials/header.php';
                 <form id="uploadForm" method="POST" enctype="multipart/form-data" class="form-sl">
                     <div class="form-group-sl">
                         <label>Judul Materi</label>
-                        <input type="text" name="judul" class="input-sl" placeholder="Contoh: Matematika Kelas 10 Bab 1" required
-                               value="<?= htmlspecialchars($_POST['judul'] ?? '') ?>">
+                        <input type="text" name="nama" class="input-sl" placeholder="Contoh: Matematika Kelas 10 Bab 1" required
+                               value="<?= htmlspecialchars($_POST['nama'] ?? '') ?>">
                     </div>
                     <div class="form-group-sl">
                         <label>Kategori / Kelas</label>
-                        <select name="kategori" class="input-sl" required>
+                        <select name="kelas" class="input-sl" required>
                             <option value="">-- Pilih Kelas --</option>
                             <?php
                             $opts = ['kelas10'=>'Kelas 10','kelas11'=>'Kelas 11','kelas12'=>'Kelas 12'];
                             foreach($opts as $val=>$label):
-                                $sel = (($_POST['kategori']??'')===$val)?'selected':'';
+                                $sel = (($_POST['kelas']??'')===$val)?'selected':'';
                             ?>
                             <option value="<?= $val ?>" <?= $sel ?>><?= $label ?></option>
                             <?php endforeach; ?>
                         </select>
-                    </div>
-                    <div class="form-group-sl">
-                        <label>Deskripsi</label>
-                        <textarea name="deskripsi" class="input-sl" rows="3" placeholder="Deskripsi singkat tentang materi ini..."><?= htmlspecialchars($_POST['deskripsi'] ?? '') ?></textarea>
                     </div>
                     <div class="form-group-sl">
                         <label>File PDF</label>
@@ -131,6 +156,10 @@ include 'partials/header.php';
                         <div id="filePreview"></div>
                         <input type="file" name="file" id="fileInput" accept=".pdf" style="display:none" required>
                     </div>
+                    <div class="form-group-sl">
+    <label>Thumbnail</label>
+    <input type="file" name="img" accept="images/*" class="input-sl">
+</div>
                     <button type="submit" class="btn-tosca" style="width:100%;justify-content:center;padding:13px">
                         <i class="bi bi-cloud-upload-fill"></i> Upload Materi
                     </button>
@@ -157,16 +186,16 @@ include 'partials/header.php';
                 <div class="materi-item" id="materi-<?= $m['id'] ?>">
                     <div class="materi-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
                     <div class="materi-info">
-                        <div class="materi-title"><?= htmlspecialchars($m['judul']) ?></div>
+                        <div class="materi-title"><?= htmlspecialchars($m['nama']) ?></div>
                         <div class="materi-meta">
                             <?php
                             $katLabel = ['kelas10'=>'Kelas 10','kelas11'=>'Kelas 11','kelas12'=>'Kelas 12'];
-                            echo $katLabel[$m['kategori']] ?? $m['kategori'];
+                            echo $katLabel[$m['kelas']] ?? $m['kelas'];
                             ?> · <?= $m['ukuran'] ?? '—' ?> · <?= formatDate($m['created_at']) ?>
                         </div>
-                        <?php if ($m['deskripsi']): ?>
+                        <?php if ($m['file']): ?>
                         <div style="font-size:11px;color:var(--gray-mid);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
-                            <?= htmlspecialchars(substr($m['deskripsi'],0,70)) ?>
+                            <?= htmlspecialchars(substr($m['file'],0,70)) ?>
                         </div>
                         <?php endif; ?>
                     </div>

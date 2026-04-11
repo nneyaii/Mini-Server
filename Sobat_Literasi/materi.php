@@ -22,7 +22,7 @@ $materi = [
 $query = mysqli_query($conn, "SELECT * FROM materi");
 
 while($row = mysqli_fetch_assoc($query)){
-    $materi[$row['kelas']][] = $row;
+  $materi[$row['kelas']][] = $row;
 }
 ?>
 
