@@ -1,9 +1,78 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+
 $pageTitle       = 'Sobat Literasi';
 $pageDescription = 'Sobat Literasi';
 $activePage      = 'home';
 
 include 'includes/head.php';
+
+// Handle contact form
+$contactSuccess = false;
+$contactErrors  = [];
+$contactData    = ['first_name' => '', 'last_name' => '', 'email' => '', 'message' => ''];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
+
+    $contactData['first_name'] = htmlspecialchars(trim($_POST['first-name'] ?? ''));
+    $contactData['last_name']  = htmlspecialchars(trim($_POST['last-name'] ?? ''));
+    $contactData['email']      = htmlspecialchars(trim($_POST['email'] ?? ''));
+    $contactData['message']    = htmlspecialchars(trim($_POST['message'] ?? ''));
+
+    // Validasi
+    if (empty($contactData['first_name'])) $contactErrors['first_name'] = 'Nama depan wajib diisi.';
+    if (empty($contactData['last_name']))  $contactErrors['last_name']  = 'Nama belakang wajib diisi.';
+    if (empty($contactData['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+        $contactErrors['email'] = 'Email tidak valid.';
+    if (empty($contactData['message']))    $contactErrors['message'] = 'Pesan wajib diisi.';
+
+    // Kirim email
+    if (empty($contactErrors)) {
+
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'alifianmalvinno2008@gmail.com'; // GANTI
+            $mail->Password   = 'kmamnheqpfpaegyp';        // GANTI (App Password Gmail)
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+
+            // Pengirim
+            $mail->setFrom('alifianmalvinno2008@gmail.com', 'Sobat Literasi');
+
+            // Reply ke user
+            $mail->addReplyTo($contactData['email']);
+
+            // Tujuan
+            $mail->addAddress('alifianmalvinno2008@gmail.com'); // email tujuan
+
+            // Isi email
+            $mail->Subject = 'Pesan dari Website Sobat Literasi';
+            $mail->Body    = "Nama: {$contactData['first_name']} {$contactData['last_name']}\n"
+                           . "Email: {$contactData['email']}\n\n"
+                           . "Pesan:\n{$contactData['message']}";
+
+            $mail->send();
+
+            $contactSuccess = true;
+
+            // Reset form
+            $contactData = ['first_name'=>'','last_name'=>'','email'=>'','message'=>''];
+
+        } catch (Exception $e) {
+            $contactErrors['send'] = "Gagal kirim: {$mail->ErrorInfo}";
+        }
+    }
+}
+
 
 // Data causes
 $causes = [
@@ -33,31 +102,6 @@ $testimonials = [
     ['quote' => 'Saya suka karena informasinya lengkap, mulai dari kegiatan sampai kontak yang bisa dihubungi. Sangat membantu!', 'name' => 'Figa',   'role' => 'Pelajar SMA',      'avatar' => 'images/avatar/pretty-blonde-woman-wearing-white-t-shirt.jpg'],
     ['quote' => 'Website ini memudahkan saya mendapatkan informasi tentang program literasi tanpa harus bertanya langsung. Praktis dan jelas.',      'name' => 'Azriel',    'role' => 'Pelajar SMA', 'avatar' => 'images/avatar/studio-portrait-emotional-happy-funny.jpg'],
 ];
-
-
-// Handle contact form
-$contactSuccess = false;
-$contactErrors  = [];
-$contactData    = ['first_name' => '', 'last_name' => '', 'email' => '', 'message' => ''];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
-    $contactData['first_name'] = htmlspecialchars(trim($_POST['first-name'] ?? ''));
-    $contactData['last_name']  = htmlspecialchars(trim($_POST['last-name'] ?? ''));
-    $contactData['email']      = htmlspecialchars(trim($_POST['email'] ?? ''));
-    $contactData['message']    = htmlspecialchars(trim($_POST['message'] ?? ''));
-
-    if (empty($contactData['first_name'])) $contactErrors['first_name'] = 'Nama depan wajib diisi.';
-    if (empty($contactData['last_name']))  $contactErrors['last_name']  = 'Nama belakang wajib diisi.';
-    if (empty($contactData['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-                                           $contactErrors['email']      = 'Email tidak valid.';
-    if (empty($contactData['message']))    $contactErrors['message']    = 'Pesan wajib diisi.';
-
-    if (empty($contactErrors)) {
-        // Proses simpan/kirim email di sini
-        $contactSuccess = true;
-        $contactData    = ['first_name' => '', 'last_name' => '', 'email' => '', 'message' => ''];
-    }
-}
 ?>
 
 <?php include 'includes/topbar.php'; ?>
@@ -326,57 +370,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['first-name'])) {
                     </div>
                 </div>
 
-                <div class="col-lg-5 col-12 mx-auto">
-                    <?php if ($contactSuccess): ?>
-                    <div class="alert alert-success">
-                        <strong>Pesan terkirim!</strong> Terima kasih, kami akan segera menghubungi Anda.
-                    </div>
-                    <?php endif; ?>
+               <div class="col-lg-5 col-12 mx-auto">
 
-                    <form class="custom-form contact-form" action="index.php#section_6" method="post" role="form">
-                        <h2>Formulir Kontak</h2>
-                        <p class="mb-4">Atau, Anda dapat mengirim email ke: <a href="mailto:info@solit.org">info@solit.org</a></p>
+    <!-- ERROR KIRIM EMAIL -->
+    <?php if (isset($contactErrors['send'])): ?>
+        <div class="alert alert-danger">
+            <?php echo $contactErrors['send']; ?>
+        </div>
+    <?php endif; ?>
 
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <input type="text" name="first-name" id="first-name"
-                                    class="form-control <?php echo isset($contactErrors['first_name']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Jack" required
-                                    value="<?php echo $contactData['first_name']; ?>">
-                                <?php if (isset($contactErrors['first_name'])): ?>
-                                <div class="invalid-feedback"><?php echo $contactErrors['first_name']; ?></div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <input type="text" name="last-name" id="last-name"
-                                    class="form-control <?php echo isset($contactErrors['last_name']) ? 'is-invalid' : ''; ?>"
-                                    placeholder="Doe" required
-                                    value="<?php echo $contactData['last_name']; ?>">
-                                <?php if (isset($contactErrors['last_name'])): ?>
-                                <div class="invalid-feedback"><?php echo $contactErrors['last_name']; ?></div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+    <!-- SUCCESS -->
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && $contactSuccess): ?>
+    <div id="successAlert" class="alert alert-success">
+        <strong>Pesan terkirim!</strong> Terima kasih, kami akan segera menghubungi Anda.
+    </div>
+    <?php endif; ?>
 
-                        <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                            class="form-control <?php echo isset($contactErrors['email']) ? 'is-invalid' : ''; ?>"
-                            placeholder="Jackdoe@gmail.com" required
-                            value="<?php echo $contactData['email']; ?>">
-                        <?php if (isset($contactErrors['email'])): ?>
-                        <div class="invalid-feedback"><?php echo $contactErrors['email']; ?></div>
-                        <?php endif; ?>
+    <form class="custom-form contact-form" action="index.php#section_6" method="post" role="form">
+        <h2>Formulir Kontak</h2>
+        <p class="mb-4">Atau, Anda dapat mengirim email ke: <a href="mailto:alifianmalvinno2008@gmail.com">info@solit.org</a></p>
 
-                        <textarea name="message" rows="5"
-                            class="form-control <?php echo isset($contactErrors['message']) ? 'is-invalid' : ''; ?>"
-                            id="message" placeholder="Tulis pesan atau pertanyaan Anda di sini..."><?php echo $contactData['message']; ?></textarea>
-                        <?php if (isset($contactErrors['message'])): ?>
-                        <div class="invalid-feedback"><?php echo $contactErrors['message']; ?></div>
-                        <?php endif; ?>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+                <input type="text" name="first-name" id="first-name"
+                    class="form-control <?php echo isset($contactErrors['first_name']) ? 'is-invalid' : ''; ?>"
+                    placeholder="Depan" required
+                    value="<?php echo $contactData['first_name']; ?>">
+                <?php if (isset($contactErrors['first_name'])): ?>
+                <div class="invalid-feedback"><?php echo $contactErrors['first_name']; ?></div>
+                <?php endif; ?>
+            </div>
 
-                        <button type="submit" class="form-control">Kirim Pesan</button>
-                    </form>
-                </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <input type="text" name="last-name" id="last-name"
+                    class="form-control <?php echo isset($contactErrors['last_name']) ? 'is-invalid' : ''; ?>"
+                    placeholder="Belakang" required
+                    value="<?php echo $contactData['last_name']; ?>">
+                <?php if (isset($contactErrors['last_name'])): ?>
+                <div class="invalid-feedback"><?php echo $contactErrors['last_name']; ?></div>
+                <?php endif; ?>
+            </div>
+        </div>
 
+        <input type="email" name="email" id="email"
+            class="form-control <?php echo isset($contactErrors['email']) ? 'is-invalid' : ''; ?>"
+            placeholder="nama@gmail.com" required
+            value="<?php echo $contactData['email']; ?>">
+        <?php if (isset($contactErrors['email'])): ?>
+        <div class="invalid-feedback"><?php echo $contactErrors['email']; ?></div>
+        <?php endif; ?>
+
+        <textarea name="message" rows="5"
+            class="form-control <?php echo isset($contactErrors['message']) ? 'is-invalid' : ''; ?>"
+            id="message" placeholder="Tulis pesan..."><?php echo $contactData['message']; ?></textarea>
+        <?php if (isset($contactErrors['message'])): ?>
+        <div class="invalid-feedback"><?php echo $contactErrors['message']; ?></div>
+        <?php endif; ?>
+
+        <button type="submit" class="form-control">Kirim Pesan</button>
+    </form>
+</div>
+
+<script>
+    setTimeout(function() {
+        const alertBox = document.getElementById('successAlert');
+        if (alertBox) {
+            alertBox.style.transition = "opacity 0.5s ease";
+            alertBox.style.opacity = "0";
+
+            setTimeout(() => {
+                alertBox.remove();
+            }, 500);
+        }
+    }, 3000); // 2 detik
+</script>
             </div>
         </div>
     </section>
