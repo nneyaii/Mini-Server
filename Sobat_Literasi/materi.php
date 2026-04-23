@@ -22,8 +22,28 @@ $materi = [
 $query = mysqli_query($conn, "SELECT * FROM materi");
 
 while($row = mysqli_fetch_assoc($query)){
-    $materi[$row['kelas']][] = $row;
+  $materi[$row['kelas']][] = $row;
 }
+?>
+
+<?php
+echo "<pre>";
+echo "Lokasi materi.php: " . __FILE__ . "\n";
+echo "Path uploads: " . realpath(__DIR__ . '/../uploads/') . "\n";
+echo "Folder uploads ada? " . (is_dir(__DIR__ . '/../uploads/') ? 'YA' : 'TIDAK') . "\n";
+
+// Cek ISI folder uploads
+echo "\nIsi folder uploads:\n";
+$files = scandir(__DIR__ . '/../uploads/');
+print_r($files);
+
+// Cek data terbaru dari DB
+$q = mysqli_query($conn, "SELECT * FROM materi ORDER BY id DESC LIMIT 1");
+$r = mysqli_fetch_assoc($q);
+echo "\nData terbaru DB: "; print_r($r);
+echo "File ada? " . (file_exists(__DIR__ . '/../uploads/' . $r['file']) ? 'YA' : 'TIDAK') . "\n";
+echo "Img ada? " . (file_exists(__DIR__ . '/../uploads/' . $r['img']) ? 'YA' : 'TIDAK') . "\n";
+echo "</pre>";
 ?>
 
 <main> 
@@ -110,6 +130,20 @@ while($row = mysqli_fetch_assoc($query)){
                 </div>
                 <?php endforeach; ?>
 
+<<<<<<< HEAD
+=======
+<?php foreach ($list as $m): ?>
+    <div class="col-lg-4 col-md-6 mb-4 d-flex">
+        <div class="custom-card w-100 d-flex flex-column">
+            <img src="<?php echo !empty($m['img']) ? '../uploads/' . $m['img'] : 'images/default.png'; ?>" class="card-img">
+            <div class="card-body text-center d-flex flex-column">
+                <h5><?php echo $m['nama']; ?></h5>
+                <button class="lihat-btn mt-auto"
+                    data-file="../uploads/<?php echo $m['file']; ?>"
+                    data-nama="<?php echo $m['nama']; ?>">
+                    Lihat Materi
+                </button>
+>>>>>>> 74d6c72bcfb1d4b3056f220648aab2c65ec34b90
             </div>
         </div>
     </section>
